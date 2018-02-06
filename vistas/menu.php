@@ -1,3 +1,4 @@
+<?php include "helper/Input.php"; ?>
 <nav class="navbar navbar-default">
     <div class="container">
         <div class="navbar-header">
@@ -13,7 +14,7 @@
         <div class="collapse navbar-collapse" id="navbar-1">
             <ul class="nav nav-justified">
                 <li >
-                    <a href="?opcion=mostrar">Mostrar</a>                     
+                    <a href="?opcion=mostrar">Mostrar</a> 
                 </li>
                 <li>
                     <a href="?opcion=insertar">Insertar</a>                     
