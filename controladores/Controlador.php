@@ -17,29 +17,48 @@ class Controlador
     public function run()
     {
 
-        //IMPLEMENTA MOSTRAR
-        if (isset($_POST['oper']) && $_GET["opcion"]=="mostrar")
-        
+        //IMPLEMENTA MOSTRAR 
+        //Asier
+        if (isset($_GET['opcion']) && $_GET['opcion'] =="mostrar"){
+            echo "Se ha pulsado mostrar ";
+            exit();
+        }
         //IMPLEMENTA EDITAR
-        if (isset($_GET['oper']) == 'editar') {
+        //Asier
+        if (isset($_GET['opcion']) && $_GET['opcion'] == 'editar') {
             //Se ejecuta editar
             echo "Se ha pulsado Editar";
             exit();
         }
         //IMPLEMENTA INSERTAR
-        
+        //Asier
+        if (isset($_GET['opcion']) && $_GET['opcion'] == 'insertar') {
+            //Se ejecuta buscar
+            echo "Se ha pulsado insertar";
+            exit();
+        }
         //IMPLEMENTA BUSCAR
-        if (isset($_GET['oper']) == 'buscar') {
+        //Aingeru
+        if (isset($_GET['opcion']) && $_GET['opcion'] == 'buscar') {
             //Se ejecuta buscar
             echo "Se ha pulsado Buscar";
             exit();
         }
-        //IMPLEMENTA MOSTRAR POR INGRESOS
-        if (isset($_GET['opcion']) == 'mostrar') {
-            //Se ejecuta mostrar
-            echo "Se ha pulsado mostrar " . $_GET['opcion'];
+        //IMPLEMENTA MOSTRAR POR Eliminar
+        //Aingeru
+        if (isset($_GET['opcion']) && $_GET['opcion'] == 'eliminar') {
+            //Se ejecuta eliminar
+            echo "Se ha pulsado eliminar";
             exit();
         }
+        //IMPLEMENTA MOSTRAR POR INGRESOS
+        //Aingeru
+        if (isset($_GET['opcion']) && $_GET['opcion'] == 'ingresos') {
+            //Se ejecuta mostrar
+            echo "Se ha pulsado ingresos";
+            exit();
+        }
+        
         //INICIAR EL PROGRAMA
         if (!isset($_POST['oper'])) {
             include "vistas/inicio.php";
