@@ -18,6 +18,7 @@ if (isset($resultado))
 
 echo "<div class='table-responsive'>";
 echo "<table class='table table-hover'><tr><th>Nombre</th><th>Apellido</th><th>NSS</th></tr>";
+//$empleados -> fetchAll();
 foreach ($empleados as $empleado)
 {
     ?>

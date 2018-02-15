@@ -1,5 +1,5 @@
 <?php
-
+include '../clases/DaoEmpleado.php';
 //include "helper/ValidadorForm.php";
 //include "modelo/DaoEmpleadoPComision.php";
 //include "modelo/EmpleadoPComision.php";
@@ -21,6 +21,25 @@ class Controlador
         //Asier
         if (isset($_GET['opcion']) && $_GET['opcion'] =="mostrar"){
             echo "Se ha pulsado mostrar ";
+        //////////////////////////////////////////
+                 /////EN REVISION/////
+        //////////////////////////////////////////    
+        $dao = new DaoEmpleado();
+        $empleados = $dao -> mostrar();
+        if (!$resul) // ha ocurrido un error
+        {
+            $error = "Error en consulta - ".mysqli_error($conexion);
+            include "error.php";
+            exit();
+        }else{
+            include "vista_listar.php";
+        }
+        
+        
+        //////////////////////////////////////////
+                 /////EN REVISION/////
+        //////////////////////////////////////////
+            
             exit();
         }
         //IMPLEMENTA EDITAR
