@@ -1,12 +1,12 @@
 <?php
-include 'DataBase.php';
+include 'clases/DataBase.php';
 class DaoEmpleado
 {
     
     private $db;
     
     function __construct() {
-        $this->db = new $DataBase();
+        $this->db = new DataBase();
     }
     
     public function mostrar(){

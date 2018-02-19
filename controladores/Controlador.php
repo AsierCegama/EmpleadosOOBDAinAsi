@@ -20,25 +20,19 @@ class Controlador
         //IMPLEMENTA MOSTRAR 
         //Asier
         if (isset($_GET['opcion']) && $_GET['opcion'] =="mostrar"){
-            echo "Se ha pulsado mostrar ";
-        //////////////////////////////////////////
-                 /////EN REVISION/////
-        //////////////////////////////////////////    
+
+   
         $dao = new DaoEmpleado();
         $empleados = $dao -> mostrar();
-        if (!$resul) // ha ocurrido un error
+        if (!$empleados) // ha ocurrido un error
         {
             $error = "Error en consulta - ".mysqli_error($conexion);
             include "error.php";
             exit();
         }else{
-            include "vista_listar.php";
+            include "vistas/listar.php";
         }
-        
-        
-        //////////////////////////////////////////
-                 /////EN REVISION/////
-        //////////////////////////////////////////
+
             
             exit();
         }
