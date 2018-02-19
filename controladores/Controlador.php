@@ -1,5 +1,5 @@
 <?php
-include '../clases/DaoEmpleado.php';
+include 'clases/DaoEmpleado.php';
 //include "helper/ValidadorForm.php";
 //include "modelo/DaoEmpleadoPComision.php";
 //include "modelo/EmpleadoPComision.php";
