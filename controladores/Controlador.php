@@ -47,8 +47,22 @@ class Controlador
         //Asier
         if (isset($_GET['opcion']) && $_GET['opcion'] == 'insertar') {
             //Se ejecuta buscar
-            echo "Se ha pulsado insertar";
+            $resultado = "<div class='table-responsive'>";
+            $resultado .= "<form name='formu'><table class='table table-hover'><tr><th>Nombre</th><th>Apellido</th><th>NSS</th></tr>";
+            $resultado .= "<tr><td><input type='text' name='nombre' value=''></td><td><input type='text' name='apellido' value=''></td><td><input type='text' name='nss' value=''></td></tr>";
+            $resultado .= "<tr><th>Fijo</th><th>Ventas brutas</th><th>Tarifa por comision</th><th>Localiza</th></tr>";   
+            $resultado .= "<tr><td><input type='text' name='fijo' value=''></td><td><input type='text' name='ventasbrutas' value=''></td><td><input type='text' name='tarifacomision' value=''></td><td><input type='text' name='localiza' value=''></td></tr>";
+            $resultado .= "</table>";
+            $resultado .= "<br /><input type='submit' name='enviar' value='Enviar' ></form></div>";
+            include 'vistas/resultado.php';
             exit();
+
+
+
+            
+            
+            
+            
         }
         //IMPLEMENTA BUSCAR
         //Aingeru
