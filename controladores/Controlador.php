@@ -46,18 +46,7 @@ class Controlador
         //IMPLEMENTA INSERTAR
         //Asier
         if (isset($_GET['opcion']) && $_GET['opcion'] == 'insertar') {
-            /* convertir esto en vista insertar
-             * 
-             */
-            
-            $resultado = "<div class='table-responsive'>";
-            $resultado .= "<form name='formu' action='index.php' method='post'><table class='table table-hover'><tr><th>Nombre</th><th>Apellido</th><th>NSS</th></tr>";
-            $resultado .= "<tr><td><input type='text' name='nombre' value=''></td><td><input type='text' name='apellido' value=''></td><td><input type='text' name='nss' value=''></td></tr>";
-            $resultado .= "<tr><th>Fijo</th><th>Ventas brutas</th><th>Tarifa por comision</th><th>Localiza</th></tr>";   
-            $resultado .= "<tr><td><input type='text' name='fijo' value=''></td><td><input type='text' name='ventasbrutas' value=''></td><td><input type='text' name='tarifacomision' value=''></td><td><input type='text' name='localiza' value=''></td></tr>";
-            $resultado .= "</table>";
-            $resultado .= "<br /><input type='submit' name='enviarInserto' value='Enviar' ></form></div>";
-            include 'vistas/resultado.php';
+            $this->mostrarFormularioInsertar();
             exit();
         }
 
@@ -65,7 +54,13 @@ class Controlador
             /* meter validacion. si no valida volver a vista insertar.
              * si valida, crear objeto epmleado y realizar el inserto y ir a mostrar.
              */
-            echo $_POST['nombre'];
+            if($this->validar() != 1){            
+            $this->mostrarFormularioInsertar();
+
+            exit();
+            }else{
+                
+            }
         }
             
             
@@ -103,17 +98,27 @@ class Controlador
 
     public function mostrarFormularioInsertar()
     {
-        
+        include "vistas/form_insertar.php";
     }
 
     public function mostrarFormularioEditar()
     {
         
     }
-
+/*
+ * En revision
+ */
     public function crearReglasDeValidacion()
     {
-        
+        $reglasValidacion = array(
+            "apellido" => array("required" => true),
+            "nombre" => array("required" => true),
+            "nss" => array("required" => true),
+            "fijo" => array("required" => true),
+            "ventas" => array("required" => true),
+            "tarifa" => array("required" => true));
+
+        return $reglasValidacion;
     }
 
     public function creaEmpleado($datos)
@@ -123,6 +128,20 @@ class Controlador
         
     }
 
+    
+    /*
+     * En revision
+     */
+    
+    private function validar()
+    {
+        $validador = new ValidadorForm();
+        $reglasValidacion = $this->crearReglasDeValidacion();
+        $validador->validar($_POST, $reglasValidacion);
+        if ($validador->esValido()) {
+        $this->registrar($validador);
+        exit();
+        }
     //Al menos estos métodos
 }
 
