@@ -144,5 +144,6 @@ class Controlador
         }
     //Al menos estos métodos
 }
-
+}
 ?>
+
