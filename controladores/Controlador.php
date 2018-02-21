@@ -46,24 +46,32 @@ class Controlador
         //IMPLEMENTA INSERTAR
         //Asier
         if (isset($_GET['opcion']) && $_GET['opcion'] == 'insertar') {
-            //Se ejecuta buscar
+            /* convertir esto en vista insertar
+             * 
+             */
+            
             $resultado = "<div class='table-responsive'>";
-            $resultado .= "<form name='formu'><table class='table table-hover'><tr><th>Nombre</th><th>Apellido</th><th>NSS</th></tr>";
+            $resultado .= "<form name='formu' action='index.php' method='post'><table class='table table-hover'><tr><th>Nombre</th><th>Apellido</th><th>NSS</th></tr>";
             $resultado .= "<tr><td><input type='text' name='nombre' value=''></td><td><input type='text' name='apellido' value=''></td><td><input type='text' name='nss' value=''></td></tr>";
             $resultado .= "<tr><th>Fijo</th><th>Ventas brutas</th><th>Tarifa por comision</th><th>Localiza</th></tr>";   
             $resultado .= "<tr><td><input type='text' name='fijo' value=''></td><td><input type='text' name='ventasbrutas' value=''></td><td><input type='text' name='tarifacomision' value=''></td><td><input type='text' name='localiza' value=''></td></tr>";
             $resultado .= "</table>";
-            $resultado .= "<br /><input type='submit' name='enviar' value='Enviar' ></form></div>";
+            $resultado .= "<br /><input type='submit' name='enviarInserto' value='Enviar' ></form></div>";
             include 'vistas/resultado.php';
             exit();
-
-
-
-            
-            
-            
-            
         }
+
+        if(isset($_POST['enviarInserto'])){
+            /* meter validacion. si no valida volver a vista insertar.
+             * si valida, crear objeto epmleado y realizar el inserto y ir a mostrar.
+             */
+            echo $_POST['nombre'];
+        }
+            
+            
+            
+            
+        
         //IMPLEMENTA BUSCAR
         //Aingeru
         if (isset($_GET['opcion']) && $_GET['opcion'] == 'buscar') {

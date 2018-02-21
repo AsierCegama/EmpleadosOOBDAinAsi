@@ -25,16 +25,17 @@ class ValidadorForm
         {
             foreach ($reglasCampo as $nombreRegla => $valorRegla)
             {
-               
-                
+               if (isset($fuente[$nombreCampo])) {  // 
+                    $valor = htmlspecialchars(stripslashes(trim($fuente[$nombreCampo])));
+                }
+                if ($nombreRegla === 'required' && $valorRegla) { //si es true y requerido
+                    if (empty($valor)){
+                        $this->addError($nombreCampo, "El valor {$nombreCampo} es requerido");
+                    }
+                }
               //Comprobar si se cumplen las reglas de validación establecidas  
                 
-                
-                
-                
-                
-                
-                
+             
             }
         }
         if (count($this->errores) === 0)
