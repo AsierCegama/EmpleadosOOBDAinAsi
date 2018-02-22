@@ -1,8 +1,6 @@
 <?php
-include 'clases/DaoEmpleado.php';
-//include "helper/ValidadorForm.php";
-//include "modelo/DaoEmpleadoPComision.php";
-//include "modelo/EmpleadoPComision.php";
+include 'modelo/DaoEmpleado.php';
+include "helper/ValidadorForm.php";
 
 /**
  * Description of Controlador
@@ -103,7 +101,7 @@ class Controlador
 
     public function mostrarFormularioEditar()
     {
-        
+
     }
 /*
  * En revision
@@ -124,8 +122,10 @@ class Controlador
     public function creaEmpleado($datos)
     /*
      */
-    {
-        
+    { 
+        $empleado = new EmpleadoPorComision($datos['nombre'],$datos['apellido'],$datos["snn"],$datos['fijo'],
+                $datos['ventas'],$datos['tarifa']);
+        return $empleado;
     }
 
     
@@ -144,6 +144,33 @@ class Controlador
         }
     //Al menos estos métodos
 }
+
+    public function registrar($validador){
+        $this->dao = new DaoEmpleado();
+        $EmpleadoPorComision = $this->creaEmpleado($_POST);
+        
+        
+        
+        
+        if($this->dao->existeApweb($apweb->getDNI())){
+            $respuesta = "El DNI ya pertenece a un/a usuari@.";
+            $this->mostrarFormulario("validar", $validador, $respuesta);
+            exit();
+        } else {
+            $respuesta = $this->dao->insertarApweb($apweb);
+            if($respuesta == "<p>Registro creado.</p>\n"){
+                $this->mostrarFormulario("continuar", $validador, $respuesta);
+                exit();
+            } else {
+                $this->mostrarFormulario("validar", $validador, $respuesta);
+                exit();
+            }
+        }
+    }
+
+
+
+
 }
 ?>
 

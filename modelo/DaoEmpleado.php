@@ -1,5 +1,5 @@
 <?php
-include 'clases/DataBase.php';
+include 'modelo/DataBase.php';
 class DaoEmpleado
 {
     
