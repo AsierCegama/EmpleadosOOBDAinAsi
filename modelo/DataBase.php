@@ -1,13 +1,4 @@
 <?php
-
-include "config/config.php";
-
-/**
- * Description of DataBase
- * Se conecta y desconecta a la base de datos,
- * ejecuta sentencias sql
- * @author Alumno
- */
 class DataBase
 {
 
@@ -45,6 +36,8 @@ class DataBase
 
     public function ejecutarSqlActualizacion($sql, $args)
     {
+        /*
+         * Revisar
         try {
             $resul = $this->conexion->prepare($sql);
             $resul->execute($args);
@@ -53,11 +46,24 @@ class DataBase
             include "vistas/resultado.php";
             exit();
         }
+         * 
+         * 
+         * Provisional
+         */
+        $sql .= implode(", ", $args) . ");";
+        //$conexion = $this->conexion;
+        if ($this->conexion->query($sql)) {
+            $resultado = "<p>Registro creado.</p>\n";
+        } else {
+            $resultado = "<p>No se creó el registro.<p>\n";
+        }
+        return $resultado;
+        
     }
-
-    public function cantidadFilas($resul)
-    {
-        return $resul->rowcount();
+    public function cantidadFilas($rst){
+        //$cuenta = $rst->rowCount();
+        //return $cuenta;
+        return $rst->rowCount();
     }
 
 }

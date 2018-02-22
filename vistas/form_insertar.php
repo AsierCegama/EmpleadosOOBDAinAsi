@@ -73,5 +73,11 @@ if (isset($resultado))
     </tr>
 </table>
 </form>
-
-<?php include "pie.php"; ?>
+    <?php 
+    if(isset($respuestaInserto)){
+        echo $respuestaInserto;
+        $respuestaInserto = "";
+    }
+ include "pie.php"; 
+ 
+?>

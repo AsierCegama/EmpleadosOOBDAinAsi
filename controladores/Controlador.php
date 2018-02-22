@@ -1,9 +1,8 @@
 <?php
-include 'clases/DaoEmpleado.php';
-//include "helper/ValidadorForm.php";
-//include "modelo/DaoEmpleadoPComision.php";
-//include "modelo/EmpleadoPComision.php";
-
+include 'modelo/DaoEmpleado.php';
+include "helper/ValidadorForm.php";
+include 'modelo/Empleado.php';
+include 'modelo/EmpleadoPorComision.php';
 /**
  * Description of Controlador
  *
@@ -103,7 +102,7 @@ class Controlador
 
     public function mostrarFormularioEditar()
     {
-        
+
     }
 /*
  * En revision
@@ -124,8 +123,14 @@ class Controlador
     public function creaEmpleado($datos)
     /*
      */
-    {
+    { 
         
+      
+        
+        
+        $empleado = new EmpleadoPorComision($datos['nombre'],$datos['apellido'],$datos["nss"],$datos['fijo'],
+                count($datos['localiza']),$datos['ventas'],$datos['tarifa']);
+        return $empleado;
     }
 
     
@@ -144,6 +149,41 @@ class Controlador
         }
     //Al menos estos métodos
 }
+
+    public function registrar($validador){
+        $this->dao = new DaoEmpleado();
+        $EmpleadoPorComision = $this->creaEmpleado($_POST);
+        
+        if($this->dao->existeEmpleado($EmpleadoPorComision->getNss())){
+            $respuestaInserto = "El NSS ya pertenece a un/a usuari@.";
+            $this->mostrarFormularioInsertar();
+            exit();
+        } else {
+  
+            $respuestaInserto = $this->dao->insertar($EmpleadoPorComision);
+            //$this->
+                    
+           
+                    
+                    
+                    //<a href="?opcion=mostrar">Mostrar</a>
+           /*
+            if($respuestaInserto == "<p>Registro creado.</p>\n"){
+                $this->mostrarFormulario("continuar", $validador, $respuestaInserto);
+                exit();
+            } else {
+                $this->mostrarFormulario("validar", $validador, $respuestaInserto);
+                exit();
+          
+            }
+       
+ */       }
+            
+    }
+
+
+
+
 }
 ?>
 

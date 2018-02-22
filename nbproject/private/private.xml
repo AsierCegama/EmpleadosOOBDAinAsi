@@ -4,10 +4,15 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/xampp/htdocs/KarmeleEmpleados/EmpleadosOOBDAinAsi/helper/ValidadorForm.php</file>
+            <file>file:/C:/xampp/htdocs/KarmeleEmpleados/EmpleadosOOBDAinAsi/modelo/DataBase.php</file>
             <file>file:/C:/xampp/htdocs/KarmeleEmpleados/EmpleadosOOBDAinAsi/controladores/Controlador.php</file>
+            <file>file:/C:/xampp/htdocs/KarmeleEmpleados/EmpleadosOOBDAinAsi/vistas/menu.php</file>
             <file>file:/C:/xampp/htdocs/KarmeleEmpleados/EmpleadosOOBDAinAsi/vistas/form_insertar.php</file>
             <file>file:/C:/xampp/htdocs/KarmeleEmpleados/EmpleadosOOBDAinAsi/vistas/listar.php</file>
+            <file>file:/C:/xampp/htdocs/KarmeleEmpleados/EmpleadosOOBDAinAsi/modelo/EmpleadoPorComision.php</file>
+            <file>file:/C:/xampp/htdocs/KarmeleEmpleados/EmpleadosOOBDAinAsi/modelo/DaoEmpleado.php</file>
             <file>file:/C:/xampp/htdocs/KarmeleEmpleados/EmpleadosOOBDAinAsi/index.php</file>
+            <file>file:/C:/xampp/htdocs/KarmeleEmpleados/EmpleadosOOBDAinAsi/modelo/Empleado.php</file>
         </group>
     </open-files>
 </project-private>
