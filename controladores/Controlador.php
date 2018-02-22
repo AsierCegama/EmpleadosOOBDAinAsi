@@ -1,7 +1,8 @@
 <?php
 include 'modelo/DaoEmpleado.php';
 include "helper/ValidadorForm.php";
-
+include 'modelo/Empleado.php';
+include 'modelo/EmpleadoPorComision.php';
 /**
  * Description of Controlador
  *
@@ -123,8 +124,8 @@ class Controlador
     /*
      */
     { 
-        $empleado = new EmpleadoPorComision($datos['nombre'],$datos['apellido'],$datos["snn"],$datos['fijo'],
-                $datos['ventas'],$datos['tarifa']);
+        $empleado = new EmpleadoPorComision($datos['nombre'],$datos['apellido'],$datos["nss"],$datos['fijo'],
+                $datos['ventas'],$datos['tarifa'],2);
         return $empleado;
     }
 
@@ -149,22 +150,23 @@ class Controlador
         $this->dao = new DaoEmpleado();
         $EmpleadoPorComision = $this->creaEmpleado($_POST);
         
-        
-        
-        
-        if($this->dao->existeApweb($apweb->getDNI())){
-            $respuesta = "El DNI ya pertenece a un/a usuari@.";
-            $this->mostrarFormulario("validar", $validador, $respuesta);
+        if($this->dao->existeEmpleado($EmpleadoPorComision->getNss())){
+            $respuestaInserto = "El NSS ya pertenece a un/a usuari@.";
+            $this->mostrarFormularioInsertar();
             exit();
         } else {
-            $respuesta = $this->dao->insertarApweb($apweb);
-            if($respuesta == "<p>Registro creado.</p>\n"){
-                $this->mostrarFormulario("continuar", $validador, $respuesta);
+  
+            $respuestaInserto = $this->dao->insertar($EmpleadoPorComision);
+           /*
+            if($respuestaInserto == "<p>Registro creado.</p>\n"){
+                $this->mostrarFormulario("continuar", $validador, $respuestaInserto);
                 exit();
             } else {
-                $this->mostrarFormulario("validar", $validador, $respuesta);
+                $this->mostrarFormulario("validar", $validador, $respuestaInserto);
                 exit();
             }
+            * 
+            */
         }
     }
 

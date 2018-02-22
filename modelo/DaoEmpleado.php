@@ -21,19 +21,19 @@ class DaoEmpleado
         
     }
     
-    public function insertar(){
+    public function insertar($Empleado){
         $this->db->conectar();
         $sql = "insert into empleados (nombre,apellido,nss,fijo,ventasbrutas,tarifacomision,localiza)"
-                . " values(?,?,?,?,?,?,?,?)";
-        $nombre = $Empleado->getNombre();
-        $apellido = $Empleado->getApellido();
-        $edad = $Empleado->getNss();
-        $dni = $Empleado->getFijo();
-        $modulo = $Empleado->getVentasbrutas();
-        $nota = $Empleado->getTarifacomision();
-        $curso = $Empleado->getLocaliza();
-        $resul = $this->db->ejecutarActualizacion($sql,$args);
-        echo $resul;
+                . " values(?,?,?,?,?,?,?)";
+        $args["nombre"] = $Empleado->getNombre();
+        $args["apellido"] = $Empleado->getApellido();
+        $args["nss"] = $Empleado->getNss();
+        $args["fijo"] = $Empleado->getFijo();
+        $args["ventas"] = $Empleado->getVentasbrutas();
+        $args["tarifa"] = $Empleado->getTarifacomision();
+        $args["localiza"] = 2;//$Empleado->getLocaliza();
+        $resul = $this->db->ejecutarSqlActualizacion($sql,$args);
+        //echo $resul;
         $this->db->desconectar();
     }
     
@@ -49,6 +49,14 @@ class DaoEmpleado
         
     }
     
+    public function existeEmpleado($nss){
+        $this->db->conectar();
+        $sql = "SELECT * FROM empleados WHERE nss LIKE '" . $nss . "';";
+        $result = $this->db->ejecutarSql($sql);
+        $numerofilas = $this->db->cantidadFilas($result);
+        $this->db->desconectar();
+         return $numerofilas <> 0;
+    }
 }
 /* 
  * To change this license header, choose License Headers in Project Properties.

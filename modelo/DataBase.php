@@ -1,7 +1,5 @@
 <?php
 
-require_once "config/config.php";
-
 /**
  * Description of DataBase
  * Se conecta y desconecta a la base de datos,
@@ -54,10 +52,10 @@ class DataBase
             exit();
         }
     }
-
-    public function cantidadFilas($resul)
-    {
-        return $resul->rowcount();
+    public function cantidadFilas($rst){
+        //$cuenta = $rst->rowCount();
+        //return $cuenta;
+        return $rst->rowCount();
     }
 
 }
