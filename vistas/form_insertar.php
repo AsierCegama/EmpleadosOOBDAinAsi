@@ -80,4 +80,4 @@ if (isset($resultado))
     }
  include "pie.php"; 
  
- ?>
+?>

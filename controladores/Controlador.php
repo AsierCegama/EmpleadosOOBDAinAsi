@@ -136,8 +136,12 @@ class Controlador
     /*
      */
     { 
+        
+      
+        
+        
         $empleado = new EmpleadoPorComision($datos['nombre'],$datos['apellido'],$datos["nss"],$datos['fijo'],
-                $datos['ventas'],$datos['tarifa'],2);
+                count($datos['localiza']),$datos['ventas'],$datos['tarifa']);
         return $empleado;
     }
 
@@ -169,6 +173,12 @@ class Controlador
         } else {
   
             $respuestaInserto = $this->dao->insertar($EmpleadoPorComision);
+            //$this->
+                    
+           
+                    
+                    
+                    //<a href="?opcion=mostrar">Mostrar</a>
            /*
             if($respuestaInserto == "<p>Registro creado.</p>\n"){
                 $this->mostrarFormulario("continuar", $validador, $respuestaInserto);
@@ -176,10 +186,11 @@ class Controlador
             } else {
                 $this->mostrarFormulario("validar", $validador, $respuestaInserto);
                 exit();
+          
             }
-            * 
-            */
-        }
+       
+ */       }
+            
     }
 
 

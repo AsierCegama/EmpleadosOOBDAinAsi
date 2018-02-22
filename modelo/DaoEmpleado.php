@@ -22,6 +22,7 @@ class DaoEmpleado
     }
     
     public function insertar($Empleado){
+        /*Revisar
         $this->db->conectar();
         $sql = "insert into empleados (nombre,apellido,nss,fijo,ventasbrutas,tarifacomision,localiza)"
                 . " values(?,?,?,?,?,?,?)";
@@ -33,8 +34,25 @@ class DaoEmpleado
         $args["tarifa"] = $Empleado->getTarifacomision();
         $args["localiza"] = 2;//$Empleado->getLocaliza();
         $resul = $this->db->ejecutarSqlActualizacion($sql,$args);
-        //echo $resul;
+        echo $resul;
         $this->db->desconectar();
+         *
+         * 
+         *  Provisional
+         */
+        $this->db->conectar();
+        $sql = "INSERT INTO empleados (nombre,apellido,nss,fijo,ventasbrutas,tarifacomision,localiza)"
+                . " VALUES (";
+        $args = array("'".$Empleado->getNombre()."'", "'".$Empleado->getApellido()."'",
+            $Empleado->getNss(),$Empleado->getFijo(),$Empleado->getVentasbrutas(),
+            $Empleado->getTarifacomision(),$Empleado->getLocalizacion());
+        $resul = $this->db->ejecutarSqlActualizacion($sql,$args);
+        $this->db->desconectar();
+        return $resul;
+        
+        
+        
+        
     }
     
     public function buscar(){
