@@ -45,8 +45,20 @@ class DaoEmpleado
         
     }
     
-    public function ingresos(){
+    public function ingresos1(){
+        $this->db->conectar();
+        $sql =" SELECT (fijo + (ventasbrutas * tarifacomision * 0.01)) ingresos,"
+                . " nombre, apellido FROM `empleados` WHERE localiza LIKE 1 ORDER BY ingresos DESC";
+        $localiza1 = $this -> db -> ejecutarSql($sql);
+        return $localiza1;
+    }
         
+    public function ingresos2(){
+        $sql =" SELECT (fijo + (ventasbrutas * tarifacomision * 0.01)) ingresos,"
+                . " nombre, apellido FROM `empleados` WHERE localiza LIKE 2 ORDER BY ingresos DESC";
+        $localiza2 = $this -> db -> ejecutarSql($sql);
+        $this->db->desconectar();
+        return $localiza2;
     }
     
     public function existeEmpleado($nss){

@@ -3,17 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/pruebas/karmeleEmpleados/EmpleadosOOBDAinAsi/vistas/inicio.php</file>
-            <file>file:/C:/xampp/htdocs/pruebas/karmeleEmpleados/EmpleadosOOBDAinAsi/helper/ValidadorForm.php</file>
-            <file>file:/C:/xampp/htdocs/pruebas/karmeleEmpleados/EmpleadosOOBDAinAsi/vistas/form_insertar.php</file>
-            <file>file:/C:/xampp/htdocs/pruebas/karmeleEmpleados/EmpleadosOOBDAinAsi/modelo/DataBase.php</file>
-            <file>file:/C:/xampp/htdocs/pruebas/karmeleEmpleados/EmpleadosOOBDAinAsi/config/config.php</file>
-            <file>file:/C:/xampp/htdocs/pruebas/karmeleEmpleados/EmpleadosOOBDAinAsi/controladores/Controlador.php</file>
-            <file>file:/C:/xampp/htdocs/pruebas/karmeleEmpleados/EmpleadosOOBDAinAsi/modelo/EmpleadoPorComision.php</file>
-            <file>file:/C:/xampp/htdocs/pruebas/karmeleEmpleados/EmpleadosOOBDAinAsi/modelo/Empleado.php</file>
-            <file>file:/C:/xampp/htdocs/pruebas/karmeleEmpleados/EmpleadosOOBDAinAsi/index.php</file>
-            <file>file:/C:/xampp/htdocs/pruebas/karmeleEmpleados/EmpleadosOOBDAinAsi/modelo/DaoEmpleado.php</file>
-            <file>file:/C:/xampp/htdocs/pruebas/karmeleEmpleados/EmpleadosOOBDAinAsi/helper/Input.php</file>
+            <file>file:/opt/lampp/htdocs/pruebas/conAsier/EmpleadosOOBDAinAsi/vistas/listar.php</file>
+            <file>file:/opt/lampp/htdocs/pruebas/conAsier/EmpleadosOOBDAinAsi/modelo/DaoEmpleado.php</file>
+            <file>file:/opt/lampp/htdocs/pruebas/conAsier/EmpleadosOOBDAinAsi/modelo/DataBase.php</file>
+            <file>file:/opt/lampp/htdocs/pruebas/conAsier/EmpleadosOOBDAinAsi/vistas/lista_ingresos.php</file>
+            <file>file:/opt/lampp/htdocs/pruebas/conAsier/EmpleadosOOBDAinAsi/controladores/Controlador.php</file>
         </group>
     </open-files>
 </project-private>

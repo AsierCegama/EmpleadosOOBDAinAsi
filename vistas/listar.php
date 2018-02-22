@@ -1,5 +1,6 @@
 <?php
 include "cabecera.php";
+
 if (empty($empleados))
 {
     echo "<h3 class='text-danger'>$error</h3>";

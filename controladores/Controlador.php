@@ -18,21 +18,18 @@ class Controlador
 
         //IMPLEMENTA MOSTRAR 
         //Asier
-        if (isset($_GET['opcion']) && $_GET['opcion'] =="mostrar"){
+        if (isset($_GET['opcion']) && $_GET['opcion'] == "mostrar") {
 
-   
-        $dao = new DaoEmpleado();
-        $empleados = $dao -> mostrar();
-        if (!$empleados) // ha ocurrido un error
-        {
-            $error = "Error en consulta - ".mysqli_error($conexion);
-            include "error.php";
-            exit();
-        }else{
-            include "vistas/listar.php";
-        }
 
-            
+            $dao = new DaoEmpleado();
+            $empleados = $dao->mostrar();
+            if (!$empleados) { // ha ocurrido un error
+                $error = "Error en consulta - " . mysqli_error($conexion);
+                include "error.php";
+                exit();
+            } else {
+                include "vistas/listar.php";
+            }
             exit();
         }
         //IMPLEMENTA EDITAR
@@ -49,23 +46,23 @@ class Controlador
             exit();
         }
 
-        if(isset($_POST['enviarInserto'])){
+        if (isset($_POST['enviarInserto'])) {
             /* meter validacion. si no valida volver a vista insertar.
              * si valida, crear objeto epmleado y realizar el inserto y ir a mostrar.
              */
-            if($this->validar() != 1){            
-            $this->mostrarFormularioInsertar();
+            if ($this->validar() != 1) {
+                $this->mostrarFormularioInsertar();
 
-            exit();
-            }else{
+                exit();
+            } else {
                 
             }
         }
-            
-            
-            
-            
-        
+
+
+
+
+
         //IMPLEMENTA BUSCAR
         //Aingeru
         if (isset($_GET['opcion']) && $_GET['opcion'] == 'buscar') {
@@ -84,7 +81,7 @@ class Controlador
         //Aingeru
         if (isset($_GET['opcion']) && $_GET['opcion'] == 'ingresos') {
             //Se ejecuta mostrar
-            echo "Se ha pulsado ingresos";
+            $this->mostrarListaIngresos();
             exit();
         }
         
@@ -103,6 +100,21 @@ class Controlador
     public function mostrarFormularioEditar()
     {
 
+    }
+    
+    public function mostrarListaIngresos()
+    {
+        $dao = new DaoEmpleado();
+            $ingresosEmpleados1 = $dao->ingresos1();
+            $ingresosEmpleados2 = $dao->ingresos2();
+            if (!$ingresosEmpleados1 || !$ingresosEmpleados2) { // ha ocurrido un error
+                $error = "Error en consulta - " . mysqli_error($conexion);
+                include "error.php";
+                exit();
+            } else {
+                include "vistas/lista_ingresos.php";
+            }
+            exit();
     }
 /*
  * En revision
