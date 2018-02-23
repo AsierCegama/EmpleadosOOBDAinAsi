@@ -3,6 +3,7 @@ include 'modelo/DaoEmpleado.php';
 include "helper/ValidadorForm.php";
 include 'modelo/Empleado.php';
 include 'modelo/EmpleadoPorComision.php';
+include "helper/Utilidades.php";
 /**
  * Description of Controlador
  *
@@ -127,7 +128,8 @@ class Controlador
             "nss" => array("required" => true),
             "fijo" => array("required" => true),
             "ventas" => array("required" => true),
-            "tarifa" => array("required" => true));
+            "tarifa" => array("required" => true),
+            "localiza" => array("required" => true)); 
 
         return $reglasValidacion;
     }

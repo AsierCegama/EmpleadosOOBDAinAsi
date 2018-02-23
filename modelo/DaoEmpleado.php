@@ -13,6 +13,7 @@ class DaoEmpleado
         $this -> db -> conectar();
         $sql = "select * from empleados";
         $result = $this -> db -> ejecutarSql($sql);
+        //$empleados = $result->fetchAll();  --Karmele (para una sola fila devuelta ¿?)
         $this -> db -> desconectar();
         return $result;
     }
@@ -72,7 +73,7 @@ class DaoEmpleado
     }
         
     public function ingresos2(){
-        $sql =" SELECT (fijo + (ventasbrutas * tarifacomision * 0.01)) ingresos,"
+        $sql =" SELECT ((fijo + (ventasbrutas * tarifacomision * 0.01)) + 150) ingresos,"
                 . " nombre, apellido FROM `empleados` WHERE localiza LIKE 2 ORDER BY ingresos DESC";
         $localiza2 = $this -> db -> ejecutarSql($sql);
         $this->db->desconectar();
