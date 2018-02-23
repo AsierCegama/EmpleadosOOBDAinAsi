@@ -20,8 +20,6 @@ class Controlador
         //IMPLEMENTA MOSTRAR 
         //Asier
         if (isset($_GET['opcion']) && $_GET['opcion'] == "mostrar") {
-
-
             $dao = new DaoEmpleado();
             $empleados = $dao->mostrar();
             if (!$empleados) { // ha ocurrido un error
@@ -60,29 +58,90 @@ class Controlador
             }
         }
 
-
-
-
-
-        //IMPLEMENTA BUSCAR
+        //BUSCAR
         //Aingeru
         if (isset($_GET['opcion']) && $_GET['opcion'] == 'buscar') {
-            //Se ejecuta buscar
-            echo "Se ha pulsado Buscar";
+            include "vistas/form_buscar.php";
             exit();
         }
-        //IMPLEMENTA MOSTRAR POR Eliminar
+        
+        if (isset($_POST['buscar'])){
+            $busqueda = htmlspecialchars($_POST['texto']);
+            $dao = new DaoEmpleado();
+            $buscado = $dao->buscar($busqueda, "nombre", 1);
+            $parte1 = $buscado->fetchAll();
+            $buscado = $dao->buscar($busqueda, "nombre", 2);
+            $parte2 = $buscado->fetchAll();
+            $buscar1 = array();
+            if (is_array($parte1)){
+                $buscar1 = array_merge($buscar1, $parte1);
+            }
+            if (is_array($parte2)){
+                $buscar1 = array_merge($buscar1, $parte2);
+            }
+            $buscado = $dao->buscar($busqueda, "apellido", 1);
+            $parte1 = $buscado->fetchAll();
+            $buscado = $dao->buscar($busqueda, "apellido", 2);
+            $parte2 = $buscado->fetchAll();
+            $buscar2 = array();
+            if (is_array($parte1)){
+                $buscar2 = array_merge($buscar2, $parte1);
+            }
+            if (is_array($parte2)){
+                $buscar2 = array_merge($buscar2, $parte2);
+            }
+            
+            include "vistas/form_buscar.php";
+            exit();
+        }
+        //ELIMINAR
         //Aingeru
-        if (isset($_GET['opcion']) && $_GET['opcion'] == 'eliminar') {
-            //Se ejecuta eliminar
-            echo "Se ha pulsado eliminar";
+        if (isset($_GET['opcion']) && $_GET['opcion'] == 'eliminar' || isset($_POST['no'])) {
+            $dao = new DaoEmpleado();
+            $empleadosEliminar = $dao->mostrar();
+            if (!$empleadosEliminar) { // ha ocurrido un error
+                $error = "Error en consulta - " . mysqli_error($conexion);
+                include "error.php";
+                exit();
+            } else {
+                include "vistas/form_eliminar.php";
+            }
             exit();
         }
-        //IMPLEMENTA MOSTRAR POR INGRESOS
+        
+        if (isset($_POST['eliminar'])){
+            include "vistas/confirma_eliminar.php";
+            exit();
+        }
+        
+        if (isset($_POST['si'])){
+            $dao = new DaoEmpleado();
+            if($dao->eliminar($_POST['empleadoEliminar'])){
+                $resultado = "Empleado/a eliminado con éxito";
+                $empleadosEliminar  = $dao->mostrar();
+            } else {
+                $error = "Ocurrió un error";
+                $empleadosEliminar  = $dao->mostrar();
+            }
+            include "vistas/form_eliminar.php";
+            exit();
+        }
+        
+        //INGRESOS
         //Aingeru
         if (isset($_GET['opcion']) && $_GET['opcion'] == 'ingresos') {
-            //Se ejecuta mostrar
-            $this->mostrarListaIngresos();
+            $dao = new DaoEmpleado();
+            $ingresa = $dao->ingresos(1);
+            $ingresosEmpleados1 = $ingresa->fetchAll();
+            $ingresa = $dao->ingresos(2);
+            $ingresosEmpleados2 = $ingresa->fetchAll();
+            if (!$ingresosEmpleados1 || !$ingresosEmpleados2) { // ha ocurrido un error
+                $error = "Error en consulta - " . mysqli_error($conexion);
+                include "error.php";
+                exit();
+            } else {
+                include "vistas/lista_ingresos.php";
+            }
             exit();
         }
         
@@ -103,20 +162,6 @@ class Controlador
 
     }
     
-    public function mostrarListaIngresos()
-    {
-        $dao = new DaoEmpleado();
-            $ingresosEmpleados1 = $dao->ingresos1();
-            $ingresosEmpleados2 = $dao->ingresos2();
-            if (!$ingresosEmpleados1 || !$ingresosEmpleados2) { // ha ocurrido un error
-                $error = "Error en consulta - " . mysqli_error($conexion);
-                include "error.php";
-                exit();
-            } else {
-                include "vistas/lista_ingresos.php";
-            }
-            exit();
-    }
 /*
  * En revision
  */
@@ -194,9 +239,6 @@ class Controlador
  */       }
             
     }
-
-
-
 
 }
 ?>

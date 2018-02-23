@@ -56,28 +56,45 @@ class DaoEmpleado
         
     }
     
-    public function buscar(){
-        
-    }
-    
-    public function eliminar(){
-        
-    }
-    
-    public function ingresos1(){
+//    public function buscar($busqueda, $valor){
+//        $this->db->conectar();
+//        $sql = "SELECT * FROM empleados WHERE ".$valor." LIKE '%".$busqueda."%';";
+//        $encontrado = $this->db->ejecutarSql($sql);
+//        $this->db->desconectar();
+//        return $encontrado;
+//    }
+    public function buscar($busqueda, $valor, $localiza){
         $this->db->conectar();
-        $sql =" SELECT (fijo + (ventasbrutas * tarifacomision * 0.01)) ingresos,"
-                . " nombre, apellido FROM `empleados` WHERE localiza LIKE 1 ORDER BY ingresos DESC";
-        $localiza1 = $this -> db -> ejecutarSql($sql);
-        return $localiza1;
-    }
-        
-    public function ingresos2(){
-        $sql =" SELECT ((fijo + (ventasbrutas * tarifacomision * 0.01)) + 150) ingresos,"
-                . " nombre, apellido FROM `empleados` WHERE localiza LIKE 2 ORDER BY ingresos DESC";
-        $localiza2 = $this -> db -> ejecutarSql($sql);
+        $sql = "SELECT nombre, apellido, ((fijo + (ventasbrutas * tarifacomision * 0.01)) ";
+        if($localiza == 2){
+             $sql.= " + 150";
+        }
+        $sql.= " ) ingresos FROM empleados WHERE ".$valor." LIKE '%".$busqueda."%'"
+                . "AND localiza LIKE ".$localiza.";";
+        $encontrado = $this->db->ejecutarSql($sql);
         $this->db->desconectar();
-        return $localiza2;
+        return $encontrado;
+    }
+    
+    public function eliminar($nss){
+        $this->db->conectar();
+        $sql = "DELETE FROM empleados WHERE nss ='".$nss."';";
+        $borrado = $this->db->ejecutarSql($sql);
+        $this->db->desconectar();
+        return $borrado;
+    }
+    
+    public function ingresos($valor){
+        $this->db->conectar();
+        $sql =" SELECT ((fijo + (ventasbrutas * tarifacomision * 0.01)) ";
+        if($valor == 2){
+             $sql.= " + 150";
+        }
+        $sql.= " ) ingresos, nombre, apellido FROM `empleados` WHERE localiza LIKE "
+                .$valor." ORDER BY ingresos DESC";
+        $localiza = $this -> db -> ejecutarSql($sql);
+        $this->db->desconectar();
+        return $localiza;
     }
     
     public function existeEmpleado($nss){
@@ -87,6 +104,15 @@ class DaoEmpleado
         $numerofilas = $this->db->cantidadFilas($result);
         $this->db->desconectar();
          return $numerofilas <> 0;
+    }
+    
+    public function mostrarEmpleado($nss){
+        $this->db->conectar();
+        $sql = "SELECT * FROM empleados WHERE nss LIKE '" . $nss . "';";
+        $result = $this->db->ejecutarSql($sql);
+        $empleado = $result->fetch();
+        $this->db->desconectar();
+         return $empleado;
     }
 }
 /* 

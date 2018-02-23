@@ -1,7 +1,7 @@
 <?php
 include "cabecera.php";
 
-include "helper/Input.php";
+//include "helper/Input.php";
 ?>
 
 <h1>Buscar un empleado</h1>
@@ -21,15 +21,15 @@ include "helper/Input.php";
 </article>
 
 <?php
-if (isset($empleados))
+if (isset($buscar1) || isset($buscar2))
 {
-    if (!empty($empleados))
+    if (!empty($buscar1))
     {
-        echo "<h3>Coincidencias</h3>";
+        echo "<h3>Coincidencias por nombre</h3>";
         echo "<div class='row'>";
         echo "<div class='table-responsive col-md-8 col-md-offset-2'>";
         echo "<table class='table table-striped'><tr><th>Nombre</th><th>Apellido</th><th>Ingresos</th></tr>";
-        foreach ($empleados as $empleado)
+        foreach ($buscar1 as $empleado)
         {
             ?>
             <tr>
@@ -42,11 +42,33 @@ if (isset($empleados))
         echo "</table>";
         echo "</div>";
         echo "</div>";
-    } else
+    }
+    if (!empty($buscar2))
+    {
+        echo "<h3>Coincidencias por apellido</h3>";
+        echo "<div class='row'>";
+        echo "<div class='table-responsive col-md-8 col-md-offset-2'>";
+        echo "<table class='table table-striped'><tr><th>Nombre</th><th>Apellido</th><th>Ingresos</th></tr>";
+        foreach ($buscar2 as $empleado)
+        {
+            ?>
+            <tr>
+                <td><?php echo htmlspecialchars($empleado['nombre']) ?></td>
+                <td><?php echo htmlspecialchars($empleado['apellido']) ?> </td>
+                <td><?php echo $empleado['ingresos'] . " €" ?> </td>
+            </tr>
+            <?php
+        }
+        echo "</table>";
+        echo "</div>";
+        echo "</div>";
+    }
+    if (empty($buscar1) && empty($buscar2))
     {
         $error = "No existen coincidencias en la base de datos";
         echo "<div class='errores'><h3>$error</h3></div>";
     }
 }
+
 include "pie.php";
 ?>

@@ -1,7 +1,7 @@
 <?php
 include "cabecera.php";
 
-//include "helper/Input.php";
+include "helper/Input.php";
 
 echo "<h1>Editar un empleado</h1>";
 

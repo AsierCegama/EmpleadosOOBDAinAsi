@@ -101,8 +101,8 @@ include "cabecera.php";
             </tr>
             <tr>
                 <td colspan="3">
-                    <label>Nacional</label><input type="checkbox" name="localiza[]" value="nacional" >
-                    <label>Internacional</label><input type="checkbox" name="localiza[]" value="internacional" >            
+                    <label>Nacional </label><input type="checkbox" name="localiza[]" value="nacional" >
+                    <label>Internacional </label><input type="checkbox" name="localiza[]" value="internacional" >            
                 </td>
             </tr>
             <tr>
