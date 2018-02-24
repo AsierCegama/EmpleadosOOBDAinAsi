@@ -5,64 +5,59 @@
  *
  * @author Alumno
  */
-class ValidadorForm
-{
+class ValidadorForm {
 
     private $errores;
     private $reglasValidacion;
     private $valido;
 
-    public function __construct()
-    {
+    public function __construct() {
         $this->errores = array();
         $this->reglasValidacion = null;
         $this->valido = false;
     }
 
-    public function validar($fuente, $reglasValidacion)
-    {
-        foreach ($reglasValidacion as $nombreCampo => $reglasCampo)
-        {
-            foreach ($reglasCampo as $nombreRegla => $valorRegla)
-            {
-               if (isset($fuente[$nombreCampo])) {  // 
+    public function validar($fuente, $reglasValidacion) {
+        $this->reglasValidacion = $reglasValidacion;
+        foreach ($reglasValidacion as $nombreCampo => $reglasCampo) {
+
+            foreach ($reglasCampo as $nombreRegla => $valorRegla) {
+                if (isset($fuente[$nombreCampo]) && $nombreCampo != "localiza") {  // 
                     $valor = htmlspecialchars(stripslashes(trim($fuente[$nombreCampo])));
                 }
+
+                if (isset($fuente[$nombreCampo]) && $nombreCampo == "localiza") {
+                    $valor = "localiza";
+                }
+
                 if ($nombreRegla === 'required' && $valorRegla) { //si es true y requerido
-                    if (empty($valor)){
+                    if (empty($valor)) {
                         $this->addError($nombreCampo, "El valor {$nombreCampo} es requerido");
                     }
                 }
-              //Comprobar si se cumplen las reglas de validación establecidas  
-                
-             
+                $valor = "";
+                //Comprobar si se cumplen las reglas de validación establecidas  
             }
         }
-        if (count($this->errores) === 0)
-        {
+        if (count($this->errores) === 0) {
             $this->valido = true;
         }
     }
 
-    public function addError($nombreCampo, $error)
-    {
+    public function addError($nombreCampo, $error) {
         $this->errores[$nombreCampo] = $error;
     }
 
-    public function esValido()
-    {
+    public function esValido() {
         return $this->valido;
     }
 
-    public function getErrores()
-    {
+    public function getErrores() {
         return $this->errores;
     }
 
-    public function getMensajeError($campo)
-    {
-        if(isset($this->errores[$campo]))
-        {
+    public function getMensajeError($campo) {
+        if (isset($this->errores[$campo])) {
             return $this->errores[$campo];
         }
         return "";

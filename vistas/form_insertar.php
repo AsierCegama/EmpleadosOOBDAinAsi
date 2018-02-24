@@ -18,104 +18,77 @@ include "cabecera.php";
   echo "<h3 class='text-success'>$resultado</h3>";
   }
  */
+if (Input::siEnviado("post"))  // ha habido envío //también if (isset($validador)) 
+{
+
+    $errores = $validador->getErrores();
+    if (!empty($errores))
+    {
+        echo "<br />";
+        echo "<div class='alert alert-warning' role='alert'>";
+        foreach ($errores as $campo => $mensajeError)
+        {
+            echo "<p>$mensajeError</p>\n";
+        }
+        echo "</div>";
+    }
+}
 ?>
 
-<div class='table-responsive' id="divInserto">
 
-    <form name='formu' action='index.php' method='post' >
-        <table class='table table-hover'>
-            <tr>
-                <th><label>Nombre</label></th>
-            </tr>
-            <tr>
-                <td>
-                    <input type='text' name='nombre' value="<?php echo Input::get('nombre') ?>" >
 
-                </td>
-            </tr>
-            <tr>
-                <th><label>Apellido</label></th>
-            </tr>
-            <tr>
-                <td>
-                    <input type='text' name='apellido' value="<?php echo Input::get('apellido') ?>" >
+<form name='formu' action='index.php' method='post' >
+    <div class="form-group" >
 
-                </td>
-            </tr>
-            <tr>
-                <th><label>NSS</label></th>
-            </tr>
-            <td>
-                <input type='text' name='nss' value="<?php echo Input::get('nss') ?>" >
-            </td>
-            </tr>
-            <tr>
-                <th><label>Fijo</label></th>
-            </tr>
-            <tr>
-                <td>
-                    <input type='text' name='fijo' value="<?php echo Input::get('fijo') ?>" >
+        <label class="form-label">Nombre</label>
 
-                </td>
-            </tr>
-            <tr>
-                <th><label>Ventas</label></th>
-            </tr>
-            <tr>
-                <td>
-                    <input type='text' name='ventas' value="<?php echo Input::get('ventas') ?>" >
+        <input type='text' class="form-control" name='nombre' value="<?php echo htmlspecialchars(Input::get('nombre')) ?>" >
 
-                </td>
-            </tr>
-            <tr>
-                <th><label>Tarifa por comision</label></th>
-            </tr>
-            <td>
-                <select name='tarifa' >
+        <label class="form-label">Apellido</label>
 
-                    <?php
-                    $tarifa = [2,6,10,14,18,22,26,30];
-                    for ($i = 0; $i < count($tarifa); $i++) {
-                        echo "<option value='" . $tarifa[$i] . "'";
-                        echo Utilidades::verificarLista(Input::get('tarifa'), $tarifa[$i]);
-                        echo ">" . $tarifa[$i]. "</option>";
-                    }
-                    ?>
+        <input type='text' class="form-control" name='apellido' value="<?php echo htmlspecialchars(Input::get('apellido')) ?>" >
+
+        <label class="form-label">NSS</label>
+
+        <input type='text' class="form-control" name='nss' value="<?php echo htmlspecialchars(Input::get('nss')) ?>" >
+
+        <label class="form-label">Fijo</label>
+
+        <input type='text' class="form-control" name='fijo' value="<?php echo Input::get('fijo') ?>" >
+
+        <label>Ventas</label>
+
+        <input type='text' class="form-control" name='ventas' value="<?php echo Input::get('ventas') ?>" >
+
+        <label class="form-label">Tarifa por comision</label>
+        <select name='tarifa' class="form-control">
+
+            <?php
+            $tarifa = [2, 6, 10, 14, 18, 22, 26, 30];
+            for ($i = 0; $i < count($tarifa); $i++) {
+                echo "<option value='" . $tarifa[$i] . "'";
+                echo Utilidades::verificarLista(Input::get('tarifa'), $tarifa[$i]);
+                echo ">" . $tarifa[$i] . "</option>";
+            }
+            ?>
+        </select>
 
 
 
-                    <!--    
-                        <option value="<?php echo Input::get('tarifa') ?>">1</option>
-                        <option value="<?php echo Input::get('tarifa') ?>">2</option>
-                    -->
-                </select>
+        <label class="form-label">Localiza</label>
+        <br />
 
-                <!--
-                <input type='text' name='tarifa' value="<?php echo Input::get('tarifa') ?>" >
-                -->
+        <label  class="checkbox-inline form-label"><input type="checkbox" name="localiza[]" value="nacional" >Nacional</label>
+        <label class="form-label checkbox-inline"><input type="checkbox" name="localiza[]" value="internacional" >Internacional</label>
+        <br />
+        <input type='submit' class="btn btn-primary" name='enviarInserto' value='Enviar' >
 
-            </td>
-            </tr>
-            <tr>
-                <th colspan="3"><label>Localiza</label></th>
-            </tr>
-            <tr>
-                <td colspan="3">
-                    <label>Nacional </label><input type="checkbox" name="localiza[]" value="nacional" >
-                    <label>Internacional </label><input type="checkbox" name="localiza[]" value="internacional" >            
-                </td>
-            </tr>
-            <tr>
-                <td colspan="3">
-                    <input type='submit' name='enviarInserto' value='Enviar' >
-                </td>
-            </tr>
-        </table>
-    </form>
-    <?php
-    if (isset($respuestaInserto)) {
-        echo $respuestaInserto;
-        $respuestaInserto = "";
-    }
-    include "pie.php";
-    ?>
+    </div>
+</form>
+<?php
+if (isset($respuestaInserto)) {
+    echo $respuestaInserto;
+    $respuestaInserto = "";
+}
+include "pie.php";
+?>

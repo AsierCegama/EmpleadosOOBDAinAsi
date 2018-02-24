@@ -23,35 +23,13 @@ class DaoEmpleado
     }
     
     public function insertar($Empleado){
-        /*Revisar
+
         $this->db->conectar();
-        $sql = "insert into empleados (nombre,apellido,nss,fijo,ventasbrutas,tarifacomision,localiza)"
-                . " values(?,?,?,?,?,?,?)";
-        $args["nombre"] = $Empleado->getNombre();
-        $args["apellido"] = $Empleado->getApellido();
-        $args["nss"] = $Empleado->getNss();
-        $args["fijo"] = $Empleado->getFijo();
-        $args["ventas"] = $Empleado->getVentasbrutas();
-        $args["tarifa"] = $Empleado->getTarifacomision();
-        $args["localiza"] = 2;//$Empleado->getLocaliza();
-        $resul = $this->db->ejecutarSqlActualizacion($sql,$args);
-        echo $resul;
+        $sql = "INSERT INTO empleados (nombre,apellido,nss,fijo,ventasbrutas,tarifacomision,localiza) VALUES (:nombre, :apellido, :nss, :fijo,:ventasbrutas, :tarifacomision, :localiza);";
+        $args = array(":nombre"=>$Empleado->getNombre(),":apellido"=>$Empleado->getApellido(),":nss"=>$Empleado->getNss(),":fijo"=>$Empleado->getFijo(),":ventasbrutas"=>$Empleado->getVentasbrutas(),":tarifacomision"=>$Empleado->getTarifacomision(),":localiza"=>$Empleado->getLocalizacion());
+        $insertado = $this->db->ejecutarSqlActualizacion($sql,$args);
         $this->db->desconectar();
-         *
-         * 
-         *  Provisional
-         */
-        $this->db->conectar();
-        $sql = "INSERT INTO empleados (nombre,apellido,nss,fijo,ventasbrutas,tarifacomision,localiza)"
-                . " VALUES (";
-        $args = array("'".$Empleado->getNombre()."'", "'".$Empleado->getApellido()."'",
-            $Empleado->getNss(),$Empleado->getFijo(),$Empleado->getVentasbrutas(),
-            $Empleado->getTarifacomision(),$Empleado->getLocalizacion());
-        $resul = $this->db->ejecutarSqlActualizacion($sql,$args);
-        $this->db->desconectar();
-        return $resul;
-        
-        
+        return $insertado;       
         
         
     }

@@ -36,23 +36,11 @@ class DataBase
 
     public function ejecutarSqlActualizacion($sql, $args)
     {
-        /*
-         * Revisar
-        try {
-            $resul = $this->conexion->prepare($sql);
-            $resul->execute($args);
-        } catch (Exception $ex) {
-            $resultado = "Se ha producido un ERROR. Contacte con el servicio;"; //$ex->getMessage();
-            include "vistas/resultado.php";
-            exit();
+        $result = $this->conexion->prepare($sql);
+        foreach($args as $campo => $dato){ 
+            $result->bindParam($campo,$dato);
         }
-         * 
-         * 
-         * Provisional
-         */
-        $sql .= implode(", ", $args) . ");";
-        //$conexion = $this->conexion;
-        if ($this->conexion->query($sql)) {
+        if ($result->execute($args)) {
             $resultado = "<p>Registro creado.</p>\n";
         } else {
             $resultado = "<p>No se creó el registro.<p>\n";

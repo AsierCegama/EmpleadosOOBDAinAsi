@@ -1,21 +1,21 @@
 <?php
+
 include 'modelo/DaoEmpleado.php';
 include "helper/ValidadorForm.php";
 include 'modelo/Empleado.php';
 include 'modelo/EmpleadoPorComision.php';
 include "helper/Utilidades.php";
+
 /**
  * Description of Controlador
  *
  * @author DWES
  */
-class Controlador
-{
+class Controlador {
 
     private $dao;
 
-    public function run()
-    {
+    public function run() {
 
         //IMPLEMENTA MOSTRAR 
         //Asier
@@ -49,12 +49,12 @@ class Controlador
             /* meter validacion. si no valida volver a vista insertar.
              * si valida, crear objeto epmleado y realizar el inserto y ir a mostrar.
              */
-            if ($this->validar() != 1) {
+            if ($this->validar() != 1 || !isset($_POST['localiza[]'])) {
                 $this->mostrarFormularioInsertar();
 
                 exit();
             } else {
-                
+            //añadir rellamada a mostrar
             }
         }
 
@@ -64,8 +64,8 @@ class Controlador
             include "vistas/form_buscar.php";
             exit();
         }
-        
-        if (isset($_POST['buscar'])){
+
+        if (isset($_POST['buscar'])) {
             $busqueda = htmlspecialchars($_POST['texto']);
             $dao = new DaoEmpleado();
             $buscado = $dao->buscar($busqueda, "nombre", 1);
@@ -73,10 +73,10 @@ class Controlador
             $buscado = $dao->buscar($busqueda, "nombre", 2);
             $parte2 = $buscado->fetchAll();
             $buscar1 = array();
-            if (is_array($parte1)){
+            if (is_array($parte1)) {
                 $buscar1 = array_merge($buscar1, $parte1);
             }
-            if (is_array($parte2)){
+            if (is_array($parte2)) {
                 $buscar1 = array_merge($buscar1, $parte2);
             }
             $buscado = $dao->buscar($busqueda, "apellido", 1);
@@ -84,13 +84,13 @@ class Controlador
             $buscado = $dao->buscar($busqueda, "apellido", 2);
             $parte2 = $buscado->fetchAll();
             $buscar2 = array();
-            if (is_array($parte1)){
+            if (is_array($parte1)) {
                 $buscar2 = array_merge($buscar2, $parte1);
             }
-            if (is_array($parte2)){
+            if (is_array($parte2)) {
                 $buscar2 = array_merge($buscar2, $parte2);
             }
-            
+
             include "vistas/form_buscar.php";
             exit();
         }
@@ -108,25 +108,25 @@ class Controlador
             }
             exit();
         }
-        
-        if (isset($_POST['eliminar'])){
+
+        if (isset($_POST['eliminar'])) {
             include "vistas/confirma_eliminar.php";
             exit();
         }
-        
-        if (isset($_POST['si'])){
+
+        if (isset($_POST['si'])) {
             $dao = new DaoEmpleado();
-            if($dao->eliminar($_POST['empleadoEliminar'])){
+            if ($dao->eliminar($_POST['empleadoEliminar'])) {
                 $resultado = "Empleado/a eliminado con éxito";
-                $empleadosEliminar  = $dao->mostrar();
+                $empleadosEliminar = $dao->mostrar();
             } else {
                 $error = "Ocurrió un error";
-                $empleadosEliminar  = $dao->mostrar();
+                $empleadosEliminar = $dao->mostrar();
             }
             include "vistas/form_eliminar.php";
             exit();
         }
-        
+
         //INGRESOS
         //Aingeru
         if (isset($_GET['opcion']) && $_GET['opcion'] == 'ingresos') {
@@ -144,7 +144,7 @@ class Controlador
             }
             exit();
         }
-        
+
         //INICIAR EL PROGRAMA
         if (!isset($_POST['oper'])) {
             include "vistas/inicio.php";
@@ -152,21 +152,19 @@ class Controlador
         }
     }
 
-    public function mostrarFormularioInsertar()
-    {
+    public function mostrarFormularioInsertar($validador = null) {
         include "vistas/form_insertar.php";
     }
 
-    public function mostrarFormularioEditar()
-    {
-
+    public function mostrarFormularioEditar() {
+        
     }
-    
-/*
- * En revision
- */
-    public function crearReglasDeValidacion()
-    {
+
+    /*
+     * En revision
+     */
+
+    public function crearReglasDeValidacion() {
         $reglasValidacion = array(
             "apellido" => array("required" => true),
             "nombre" => array("required" => true),
@@ -174,70 +172,65 @@ class Controlador
             "fijo" => array("required" => true),
             "ventas" => array("required" => true),
             "tarifa" => array("required" => true),
-            "localiza" => array("required" => true)); 
+            "localiza" => array("required" => true));
 
         return $reglasValidacion;
     }
 
     public function creaEmpleado($datos)
     /*
-     */
-    { 
-        
-      
-        
-        
-        $empleado = new EmpleadoPorComision($datos['nombre'],$datos['apellido'],$datos["nss"],$datos['fijo'],
-                count($datos['localiza']),$datos['ventas'],$datos['tarifa']);
+     */ {
+
+
+
+
+        $empleado = new EmpleadoPorComision($datos['nombre'], $datos['apellido'], $datos["nss"], $datos['fijo'], count($datos['localiza']), $datos['ventas'], $datos['tarifa']);
         return $empleado;
     }
 
-    
     /*
      * En revision
      */
-    
-    private function validar()
-    {
+
+    private function validar() {
         $validador = new ValidadorForm();
         $reglasValidacion = $this->crearReglasDeValidacion();
         $validador->validar($_POST, $reglasValidacion);
         if ($validador->esValido()) {
-        $this->registrar($validador);
-        exit();
+            $this->registrar($validador);
+            exit();
         }
-    //Al menos estos métodos
-}
+        // formulario no correcto, mostrarlo nuevamente con los errores
+        $this->mostrarFormularioInsertar($validador);
+        exit();
 
-    public function registrar($validador){
+    }
+
+    public function registrar($validador) {
         $this->dao = new DaoEmpleado();
         $EmpleadoPorComision = $this->creaEmpleado($_POST);
-        
-        if($this->dao->existeEmpleado($EmpleadoPorComision->getNss())){
+
+        if ($this->dao->existeEmpleado($EmpleadoPorComision->getNss())) {
             $respuestaInserto = "El NSS ya pertenece a un/a usuari@.";
             $this->mostrarFormularioInsertar();
             exit();
         } else {
-  
+
             $respuestaInserto = $this->dao->insertar($EmpleadoPorComision);
             //$this->
-                    
-           
-                    
-                    
-                    //<a href="?opcion=mostrar">Mostrar</a>
-           /*
-            if($respuestaInserto == "<p>Registro creado.</p>\n"){
-                $this->mostrarFormulario("continuar", $validador, $respuestaInserto);
-                exit();
-            } else {
-                $this->mostrarFormulario("validar", $validador, $respuestaInserto);
-                exit();
-          
-            }
-       
- */       }
-            
+            //<a href="?opcion=mostrar">Mostrar</a>
+            /*
+              if($respuestaInserto == "<p>Registro creado.</p>\n"){
+              $this->mostrarFormulario("continuar", $validador, $respuestaInserto);
+              exit();
+              } else {
+              $this->mostrarFormulario("validar", $validador, $respuestaInserto);
+              exit();
+
+              }
+
+             */
+        }
     }
 
 }
