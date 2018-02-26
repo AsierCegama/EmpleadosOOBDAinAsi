@@ -20,8 +20,7 @@ class Controlador {
         //IMPLEMENTA MOSTRAR 
         //Asier
         if (isset($_GET['opcion']) && $_GET['opcion'] == "mostrar") {
-            $dao = new DaoEmpleado();
-            $empleados = $dao->mostrar();
+            $empleados = $this->mostrar();
             if (!$empleados) { // ha ocurrido un error
                 $error = "Error en consulta - " . mysqli_error($conexion);
                 include "error.php";
@@ -49,13 +48,19 @@ class Controlador {
             /* meter validacion. si no valida volver a vista insertar.
              * si valida, crear objeto epmleado y realizar el inserto y ir a mostrar.
              */
+            $this->validar();
+/*
             if ($this->validar() != 1 || !isset($_POST['localiza[]'])) {
                 $this->mostrarFormularioInsertar();
 
                 exit();
             } else {
-            //añadir rellamada a mostrar
+                echo "mensaje de pruebabaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+                $_GET['opcion'] = "mostrar";
+                $this->run();
             }
+ * 
+ */
         }
 
         //BUSCAR
@@ -152,6 +157,12 @@ class Controlador {
         }
     }
 
+    function mostrar() {
+        $dao = new DaoEmpleado();
+        $empleados = $dao->mostrar();
+        return $empleados;
+    }
+
     public function mostrarFormularioInsertar($validador = null) {
         include "vistas/form_insertar.php";
     }
@@ -198,12 +209,14 @@ class Controlador {
         $validador->validar($_POST, $reglasValidacion);
         if ($validador->esValido()) {
             $this->registrar($validador);
-            exit();
-        }
+            $empleados = $this->mostrar();
+            include 'vistas/listar.php';
+//            exit();
+        }else{
         // formulario no correcto, mostrarlo nuevamente con los errores
         $this->mostrarFormularioInsertar($validador);
         exit();
-
+        }
     }
 
     public function registrar($validador) {
