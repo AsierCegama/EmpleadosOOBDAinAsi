@@ -33,10 +33,26 @@ class Controlador {
         //IMPLEMENTA EDITAR
         //Asier
         if (isset($_GET['opcion']) && $_GET['opcion'] == 'editar') {
-            //Se ejecuta editar
-            echo "Se ha pulsado Editar";
+            $dao = new DaoEmpleado();
+            $empleadosEditar = $dao->mostrar();
+            if (!$empleadosEditar) { // ha ocurrido un error
+                $error = "Error en consulta - " . mysqli_error($conexion);
+                include "error.php";
+                exit();
+            } else {
+                include "vistas/form_empleEdit.php";
+            }
             exit();
         }
+
+
+        if (isset($_POST['empleadoAEditar'])) {
+            $contenedor = $this->partirCadena($_POST['empleadoAEditar']);
+            $emple = $this->crearEmpleadoAEditar($contenedor[0],$contenedor[1],$contenedor[2],100,100,2,100);
+            var_dump($emple);
+        }
+
+
         //IMPLEMENTA INSERTAR
         //Asier
         if (isset($_GET['opcion']) && $_GET['opcion'] == 'insertar') {
@@ -45,22 +61,7 @@ class Controlador {
         }
 
         if (isset($_POST['enviarInserto'])) {
-            /* meter validacion. si no valida volver a vista insertar.
-             * si valida, crear objeto epmleado y realizar el inserto y ir a mostrar.
-             */
             $this->validar();
-/*
-            if ($this->validar() != 1 || !isset($_POST['localiza[]'])) {
-                $this->mostrarFormularioInsertar();
-
-                exit();
-            } else {
-                echo "mensaje de pruebabaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-                $_GET['opcion'] = "mostrar";
-                $this->run();
-            }
- * 
- */
         }
 
         //BUSCAR
@@ -157,6 +158,15 @@ class Controlador {
         }
     }
 
+    function partirCadena($cadena){
+        return explode(",",$cadena);
+    }
+    
+    function crearEmpleadoAEditar($nombre, $apellido, $nss, $fijo, $tarifa, $localiza, $ventas) {
+        $emple = new EmpleadoPorComision($nombre, $apellido, $nss, $fijo, $localiza, $ventas, $tarifa);
+        return $emple;
+    }
+
     function mostrar() {
         $dao = new DaoEmpleado();
         $empleados = $dao->mostrar();
@@ -212,10 +222,10 @@ class Controlador {
             $empleados = $this->mostrar();
             include 'vistas/listar.php';
 //            exit();
-        }else{
-        // formulario no correcto, mostrarlo nuevamente con los errores
-        $this->mostrarFormularioInsertar($validador);
-        exit();
+        } else {
+            // formulario no correcto, mostrarlo nuevamente con los errores
+            $this->mostrarFormularioInsertar($validador);
+            exit();
         }
     }
 
