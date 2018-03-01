@@ -1,4 +1,4 @@
-<?php include "helper/Input.php"; ?>
+<?php //include "helper/Input.php"; ?>
 <nav class="navbar navbar-default">
     <div class="container">
         <div class="navbar-header">

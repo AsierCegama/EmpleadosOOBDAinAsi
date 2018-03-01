@@ -48,8 +48,15 @@ class Controlador {
 
         if (isset($_POST['empleadoAEditar'])) {
             $contenedor = $this->partirCadena($_POST['empleadoAEditar']);
-            $emple = $this->crearEmpleadoAEditar($contenedor[0],$contenedor[1],$contenedor[2],100,100,2,100);
-            var_dump($emple);
+            $emple = $this->crearEmpleadoAEditar($contenedor[0], $contenedor[1], $contenedor[2], 100, 100, 2, 100);
+            include 'vistas/form_editar.php';
+            exit();
+            //var_dump($emple);
+        }
+
+        if (isset($_POST['editando'])) {
+            $this->validarEditar('vistas/form_editar.php');
+
         }
 
 
@@ -61,7 +68,8 @@ class Controlador {
         }
 
         if (isset($_POST['enviarInserto'])) {
-            $this->validar();
+            $this->validar('vistas/form_insertar.php');
+            exit();
         }
 
         //BUSCAR
@@ -158,11 +166,12 @@ class Controlador {
         }
     }
 
-    function partirCadena($cadena){
-        return explode(",",$cadena);
+    function partirCadena($cadena) {
+        return explode(",", $cadena);
     }
-    
+
     function crearEmpleadoAEditar($nombre, $apellido, $nss, $fijo, $tarifa, $localiza, $ventas) {
+
         $emple = new EmpleadoPorComision($nombre, $apellido, $nss, $fijo, $localiza, $ventas, $tarifa);
         return $emple;
     }
@@ -178,7 +187,7 @@ class Controlador {
     }
 
     public function mostrarFormularioEditar() {
-        
+        include "vistas/form_editar.php";
     }
 
     /*
@@ -198,13 +207,7 @@ class Controlador {
         return $reglasValidacion;
     }
 
-    public function creaEmpleado($datos)
-    /*
-     */ {
-
-
-
-
+    public function creaEmpleado($datos) {
         $empleado = new EmpleadoPorComision($datos['nombre'], $datos['apellido'], $datos["nss"], $datos['fijo'], count($datos['localiza']), $datos['ventas'], $datos['tarifa']);
         return $empleado;
     }
@@ -213,7 +216,35 @@ class Controlador {
      * En revision
      */
 
-    private function validar() {
+    private function validarEditar($vista) {
+        $validador = new ValidadorForm();
+        $reglasValidacion = $this->crearReglasDeValidacion();
+        $validador->validar($_POST, $reglasValidacion);
+        if ($validador->esValido()) {
+            $this->registrarEditar($validador);
+            $empleados = $this->mostrar();
+            include 'vistas/listar.php';
+
+            //exit();
+        } else {
+            include $vista;
+        }
+    }
+
+    public function registrarEditar($validador) {
+        $this->dao = new DaoEmpleado();
+        $EmpleadoPorComision = $emple;
+
+        if ($this->dao->existeEmpleado($EmpleadoPorComision->getNss())) {
+            $respuestaInserto = "El NSS ya pertenece a un/a usuari@.";
+            $this->mostrarFormularioEditar();
+            exit();
+        } else {
+            $respuestaEdicion = $this->dao->editar($EmpleadoPorComision);
+        }
+    }
+
+    private function validar($vista) {
         $validador = new ValidadorForm();
         $reglasValidacion = $this->crearReglasDeValidacion();
         $validador->validar($_POST, $reglasValidacion);
@@ -221,11 +252,10 @@ class Controlador {
             $this->registrar($validador);
             $empleados = $this->mostrar();
             include 'vistas/listar.php';
-//            exit();
+
+            //exit();
         } else {
-            // formulario no correcto, mostrarlo nuevamente con los errores
-            $this->mostrarFormularioInsertar($validador);
-            exit();
+            include $vista;
         }
     }
 
@@ -238,21 +268,7 @@ class Controlador {
             $this->mostrarFormularioInsertar();
             exit();
         } else {
-
             $respuestaInserto = $this->dao->insertar($EmpleadoPorComision);
-            //$this->
-            //<a href="?opcion=mostrar">Mostrar</a>
-            /*
-              if($respuestaInserto == "<p>Registro creado.</p>\n"){
-              $this->mostrarFormulario("continuar", $validador, $respuestaInserto);
-              exit();
-              } else {
-              $this->mostrarFormulario("validar", $validador, $respuestaInserto);
-              exit();
-
-              }
-
-             */
         }
     }
 

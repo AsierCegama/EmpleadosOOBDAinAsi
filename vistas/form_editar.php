@@ -1,11 +1,11 @@
 <?php
 include "cabecera.php";
 
-include "helper/Input.php";
+//include "helper/Input.php";
 
 echo "<h1>Editar un empleado</h1>";
 
-if ($resultado == "repetir") {
+if (isset($resultado) && $resultado == "repetir") {
     $errores = $validador->getErrores();
     echo "<div class='text-danger'>";
     foreach ($errores as $campo => $mensajeError) {
@@ -13,31 +13,56 @@ if ($resultado == "repetir") {
     }
     echo "</div>";
 }
+/*
+if (isset($_POST)) {
+    $nombre = $_POST['nombre'];
+    $apellido = $_POST['apellido'];
+    $nss = $_POST['nss'];
+    $fijo = $_POST['fijo'];
+    $ventas = $_POST['tarifa'];
+    $tarifa = $_POST['ventas'];
+    $localiza = $_POST['localiza'];
+}
+ * */
+
 ?>
 
 <article>
     <fieldset>
         <!-- DEBEN GUARDARSE LOS DATOS DE LA PERSONA A EDITAR -->
-        
+
         <form action="" method="POST">
             <div class="form-group">
                 <label class="control-label">Nombre</label>
-                <input class="form-control" type="text"name="nombre" placeholder="Escribe tu nombre" value="<?php echo $nombre; ?>"/>
+                <input class="form-control" type="text" name="nombre" placeholder="Escribe tu nombre" value="<?php echo $nombre; ?>"/>
                 <label class="control-label">Apellido</label>
-                <input class="form-control" type="text"name="apellido" placeholder="Escribe tu apellido" value="<?php echo $apellido; ?>"/>
+                <input class="form-control" type="text" name="apellido" placeholder="Escribe tu apellido" value="<?php echo $apellido; ?>"/>
                 <label class="control-label">Nss</label>
-                <input class="form-control" type="text"name="nss" placeholder="Escribe tu nss" value="<?php echo $nss; ?>"/>
+                <input class="form-control" type="text" name="nss" placeholder="Escribe tu nss" value="<?php echo $nss; ?>"/>
                 <label class="control-label">Fijo</label>
-                <input class="form-control" type="text"name="fijo" placeholder="Escribe tu salario fijo" value="<?php echo $fijo; ?>"/>
+                <input class="form-control" type="text" name="fijo" placeholder="Escribe tu salario fijo" value="<?php echo $fijo; ?>"/>
                 <label class="control-label">Ventas</label>
-                <input class="form-control" type="text"name="ventas" placeholder="Escribe las ventas realizadas" value="<?php echo $ventas; ?>"/>
+                <input class="form-control" type="text" name="ventas" placeholder="Escribe las ventas realizadas" value="<?php echo $ventas; ?>"/>
                 <label class="control-label">Tarifa</label>
-                <input class="form-control" type="text"name="tarifa" placeholder="Escribe tu tarifa" value="<?php echo $tarifa; ?>"/>
+                <input class="form-control" type="text" name="tarifa" placeholder="Escribe tu tarifa" value="<?php echo $tarifa; ?>"/>
                 <label class="control-label">Localizacion</label>
-                <input class="form-control" type="text"name="localiza" placeholder="Escribe tu localizacion" value="<?php echo $localiza; ?>"/>
+                <input class="form-control" type="text" name="localiza" placeholder="Escribe tu localizacion" value="<?php echo $localiza; ?>"/>
                 <input type="submit" name="editando" value="editando" />
                 <!--?php echo Input::get('nombre') ? pinta el dato si este se ha escrito-->
             </div>
+            <?php
+           /* 
+            if (isset($emple)) {
+                echo "<input type='hidden' name='empleado' value='" . $_POST['nombre'] . "' />";
+                echo "<input type='hidden' name='empleado' value='" . $_POST['apellido'] . "' />";
+                echo "<input type='hidden' name='empleado' value='" . $_POST['nss'] . "' />";
+                echo "<input type='hidden' name='empleado' value='" . $_POST['ventas'] . "' />";
+                echo "<input type='hidden' name='empleado' value='" . $_POST['tarifa'] . "' />";
+                echo "<input type='hidden' name='empleado' value='" . $_POST['localiza'] . "' />";
+                echo "<input type='hidden' name='empleado' value='" . $_POST['fijo'] . "' />";
+            }
+            * */
+            ?>
 
             <!-- COMPLETAR FORMULARIO   -->
 
@@ -47,7 +72,7 @@ if ($resultado == "repetir") {
 
 
 
-
+        </form>
     </fieldset>
 </article>
 
