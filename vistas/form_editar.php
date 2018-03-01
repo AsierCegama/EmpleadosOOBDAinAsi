@@ -5,26 +5,28 @@ include "cabecera.php";
 
 echo "<h1>Editar un empleado</h1>";
 
-if (isset($resultado) && $resultado == "repetir") {
+
+if (isset($validador)) {  // ha habido envío //también if (isset($validador)) 
     $errores = $validador->getErrores();
-    echo "<div class='text-danger'>";
-    foreach ($errores as $campo => $mensajeError) {
-        echo "<h3>$mensajeError</h3>";
+    if (!empty($errores)) {
+        echo "<br />";
+        echo "<div class='alert alert-warning' role='alert'>";
+        foreach ($errores as $campo => $mensajeError) {
+            echo "<p>$mensajeError</p>\n";
+        }
+        echo "</div>";
     }
-    echo "</div>";
 }
 /*
-if (isset($_POST)) {
-    $nombre = $_POST['nombre'];
-    $apellido = $_POST['apellido'];
-    $nss = $_POST['nss'];
-    $fijo = $_POST['fijo'];
-    $ventas = $_POST['tarifa'];
-    $tarifa = $_POST['ventas'];
-    $localiza = $_POST['localiza'];
-}
- * */
-
+  if (isset($resultado) && $resultado == "repetir") {
+  $errores = $validador->getErrores();
+  echo "<div class='text-danger'>";
+  foreach ($errores as $campo => $mensajeError) {
+  echo "<h3>$mensajeError</h3>";
+  }
+  echo "</div>";
+  }
+ */
 ?>
 
 <article>
@@ -34,44 +36,41 @@ if (isset($_POST)) {
         <form action="" method="POST">
             <div class="form-group">
                 <label class="control-label">Nombre</label>
-                <input class="form-control" type="text" name="nombre" placeholder="Escribe tu nombre" value="<?php echo $nombre; ?>"/>
+                <input class="form-control" type="text" name="nombre" placeholder="Escribe tu nombre" value="<?php echo htmlspecialchars(Input::get('nombre')); ?>"/>
                 <label class="control-label">Apellido</label>
-                <input class="form-control" type="text" name="apellido" placeholder="Escribe tu apellido" value="<?php echo $apellido; ?>"/>
+                <input class="form-control" type="text" name="apellido" placeholder="Escribe tu apellido" value="<?php echo htmlspecialchars(Input::get('apellido')); ?>"/>
                 <label class="control-label">Nss</label>
-                <input class="form-control" type="text" name="nss" placeholder="Escribe tu nss" value="<?php echo $nss; ?>"/>
+                <input class="form-control" type="text" name="nss" placeholder="Escribe tu nss" value="<?php echo htmlspecialchars(Input::get('nss')); ?>"/>
                 <label class="control-label">Fijo</label>
-                <input class="form-control" type="text" name="fijo" placeholder="Escribe tu salario fijo" value="<?php echo $fijo; ?>"/>
+                <input class="form-control" type="text" name="fijo" placeholder="Escribe tu salario fijo" value="<?php echo htmlspecialchars(Input::get('fijo')); ?>"/>
                 <label class="control-label">Ventas</label>
-                <input class="form-control" type="text" name="ventas" placeholder="Escribe las ventas realizadas" value="<?php echo $ventas; ?>"/>
+                <input class="form-control" type="text" name="ventas" placeholder="Escribe las ventas realizadas" value="<?php echo htmlspecialchars(Input::get('ventas')); ?>"/>
                 <label class="control-label">Tarifa</label>
-                <input class="form-control" type="text" name="tarifa" placeholder="Escribe tu tarifa" value="<?php echo $tarifa; ?>"/>
+                <select name='tarifa' class="form-control">
+
+                    <?php
+                    $tarifa = [2, 6, 10, 14, 18, 22, 26, 30];
+                    for ($i = 0; $i < count($tarifa); $i++) {
+                        echo "<option value='" . $tarifa[$i] . "'";
+                        echo Utilidades::verificarLista(Input::get('tarifa'), $tarifa[$i]);
+                        if($_POST['tarifa'] == $tarifa[$i]){
+                            echo "selected >" . $tarifa[$i] . "</option>";
+                        }else{
+                            echo ">" . $tarifa[$i] . "</option>";
+                        }
+                    }
+                    
+                    ?>
+                </select>
                 <label class="control-label">Localizacion</label>
-                <input class="form-control" type="text" name="localiza" placeholder="Escribe tu localizacion" value="<?php echo $localiza; ?>"/>
+                <br />
+
+                <label  class="checkbox-inline form-label"><input type="checkbox" name="localiza[]" value="nacional" >Nacional</label>
+                <label class="form-label checkbox-inline"><input type="checkbox" name="localiza[]" value="internacional" >Internacional</label>
+                <br />
                 <input type="submit" name="editando" value="editando" />
                 <!--?php echo Input::get('nombre') ? pinta el dato si este se ha escrito-->
             </div>
-            <?php
-           /* 
-            if (isset($emple)) {
-                echo "<input type='hidden' name='empleado' value='" . $_POST['nombre'] . "' />";
-                echo "<input type='hidden' name='empleado' value='" . $_POST['apellido'] . "' />";
-                echo "<input type='hidden' name='empleado' value='" . $_POST['nss'] . "' />";
-                echo "<input type='hidden' name='empleado' value='" . $_POST['ventas'] . "' />";
-                echo "<input type='hidden' name='empleado' value='" . $_POST['tarifa'] . "' />";
-                echo "<input type='hidden' name='empleado' value='" . $_POST['localiza'] . "' />";
-                echo "<input type='hidden' name='empleado' value='" . $_POST['fijo'] . "' />";
-            }
-            * */
-            ?>
-
-            <!-- COMPLETAR FORMULARIO   -->
-
-
-
-
-
-
-
         </form>
     </fieldset>
 </article>

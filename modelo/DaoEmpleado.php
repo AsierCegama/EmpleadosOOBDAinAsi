@@ -18,8 +18,16 @@ class DaoEmpleado
         return $result;
     }
     
-    public function editar(){
+    public function editar($Empleado){
+        $this->db->conectar();
         
+        // UPDATE `empleados` SET `nombre`='Sancho',`apellido`='panza',`fijo`=100,`ventasbrutas`=100,`tarifacomision`=20,`localiza`=2 WHERE `nss` like 321654;
+        
+        $this -> db -> conectar();
+        $sql = "UPDATE `empleados` SET `nombre`='".$Empleado->getNombre()."',`apellido`='".$Empleado->getApellido()."',`fijo`=".$Empleado->getFijo().",`ventasbrutas`=".$Empleado->getVentasbrutas().",`tarifacomision`=".$Empleado->getTarifacomision().",`localiza`=".$Empleado->getLocalizacion()." WHERE `nss` like '".$Empleado->getNss()."'";
+        $result = $this -> db -> ejecutarSql($sql);
+        $this -> db -> desconectar();
+        return $result;
     }
     
     public function insertar($Empleado){
@@ -29,18 +37,9 @@ class DaoEmpleado
         $args = array(":nombre"=>$Empleado->getNombre(),":apellido"=>$Empleado->getApellido(),":nss"=>$Empleado->getNss(),":fijo"=>$Empleado->getFijo(),":ventasbrutas"=>$Empleado->getVentasbrutas(),":tarifacomision"=>$Empleado->getTarifacomision(),":localiza"=>$Empleado->getLocalizacion());
         $insertado = $this->db->ejecutarSqlActualizacion($sql,$args);
         $this->db->desconectar();
-        return $insertado;       
-        
-        
+        return $insertado;            
     }
-    
-//    public function buscar($busqueda, $valor){
-//        $this->db->conectar();
-//        $sql = "SELECT * FROM empleados WHERE ".$valor." LIKE '%".$busqueda."%';";
-//        $encontrado = $this->db->ejecutarSql($sql);
-//        $this->db->desconectar();
-//        return $encontrado;
-//    }
+
     public function buscar($busqueda, $valor, $localiza){
         $this->db->conectar();
         $sql = "SELECT nombre, apellido, ((fijo + (ventasbrutas * tarifacomision * 0.01)) ";
@@ -93,9 +92,3 @@ class DaoEmpleado
          return $empleado;
     }
 }
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-

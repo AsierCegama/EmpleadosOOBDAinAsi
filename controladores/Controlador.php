@@ -47,16 +47,14 @@ class Controlador {
 
 
         if (isset($_POST['empleadoAEditar'])) {
-            $contenedor = $this->partirCadena($_POST['empleadoAEditar']);
-            $emple = $this->crearEmpleadoAEditar($contenedor[0], $contenedor[1], $contenedor[2], 100, 100, 2, 100);
             include 'vistas/form_editar.php';
             exit();
             //var_dump($emple);
         }
-
         if (isset($_POST['editando'])) {
-            $this->validarEditar('vistas/form_editar.php');
-
+            $this->validar('vistas/form_editar.php');
+            exit();
+            //var_dump($emple);
         }
 
 
@@ -166,16 +164,6 @@ class Controlador {
         }
     }
 
-    function partirCadena($cadena) {
-        return explode(",", $cadena);
-    }
-
-    function crearEmpleadoAEditar($nombre, $apellido, $nss, $fijo, $tarifa, $localiza, $ventas) {
-
-        $emple = new EmpleadoPorComision($nombre, $apellido, $nss, $fijo, $localiza, $ventas, $tarifa);
-        return $emple;
-    }
-
     function mostrar() {
         $dao = new DaoEmpleado();
         $empleados = $dao->mostrar();
@@ -189,10 +177,6 @@ class Controlador {
     public function mostrarFormularioEditar() {
         include "vistas/form_editar.php";
     }
-
-    /*
-     * En revision
-     */
 
     public function crearReglasDeValidacion() {
         $reglasValidacion = array(
@@ -212,53 +196,33 @@ class Controlador {
         return $empleado;
     }
 
-    /*
-     * En revision
-     */
-
-    private function validarEditar($vista) {
-        $validador = new ValidadorForm();
-        $reglasValidacion = $this->crearReglasDeValidacion();
-        $validador->validar($_POST, $reglasValidacion);
-        if ($validador->esValido()) {
-            $this->registrarEditar($validador);
-            $empleados = $this->mostrar();
-            include 'vistas/listar.php';
-
-            //exit();
-        } else {
-            include $vista;
-        }
-    }
-
-    public function registrarEditar($validador) {
-        $this->dao = new DaoEmpleado();
-        $EmpleadoPorComision = $emple;
-
-        if ($this->dao->existeEmpleado($EmpleadoPorComision->getNss())) {
-            $respuestaInserto = "El NSS ya pertenece a un/a usuari@.";
-            $this->mostrarFormularioEditar();
-            exit();
-        } else {
-            $respuestaEdicion = $this->dao->editar($EmpleadoPorComision);
-        }
-    }
-
     private function validar($vista) {
         $validador = new ValidadorForm();
         $reglasValidacion = $this->crearReglasDeValidacion();
         $validador->validar($_POST, $reglasValidacion);
         if ($validador->esValido()) {
-            $this->registrar($validador);
-            $empleados = $this->mostrar();
-            include 'vistas/listar.php';
-
+            if ($vista == 'vistas/form_insertar.php') {
+                $this->registrar($validador);
+                $empleados = $this->mostrar();
+                include 'vistas/listar.php';
+            }elseif($vista == 'vistas/form_editar.php'){
+                $this->actualizarEmpleado($validador);
+                $empleados = $this->mostrar();
+                include 'vistas/listar.php';
+            }
             //exit();
         } else {
             include $vista;
         }
     }
 
+    function actualizarEmpleado(){
+        $this->dao = new DaoEmpleado();
+        $EmpleadoPorComision = $this->creaEmpleado($_POST);
+        $respuestaEditar = $this->dao->editar($EmpleadoPorComision);
+        
+    }
+    
     public function registrar($validador) {
         $this->dao = new DaoEmpleado();
         $EmpleadoPorComision = $this->creaEmpleado($_POST);
