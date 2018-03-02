@@ -12,13 +12,15 @@ include "cabecera.php";
 
 
   echo "<h1>Aquí se listan los empleados</h1>";
-
-  if (isset($resultado))
+*/
+  if (isset($respuestaInserto))
   {
-  echo "<h3 class='text-success'>$resultado</h3>";
+  echo "<h3 class='text-success'>$respuestaInserto</h3>";
   }
- */
-if (Input::siEnviado("post"))  // ha habido envío //también if (isset($validador)) 
+
+
+
+if (isset($validador))  // ha habido envío //también if (isset($validador)) 
 {
 
     $errores = $validador->getErrores();

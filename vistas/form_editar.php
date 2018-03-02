@@ -40,7 +40,7 @@ if (isset($validador)) {  // ha habido envío //también if (isset($validador))
                 <label class="control-label">Apellido</label>
                 <input class="form-control" type="text" name="apellido" placeholder="Escribe tu apellido" value="<?php echo htmlspecialchars(Input::get('apellido')); ?>"/>
                 <label class="control-label">Nss</label>
-                <input class="form-control" type="text" name="nss" placeholder="Escribe tu nss" value="<?php echo htmlspecialchars(Input::get('nss')); ?>"/>
+                <input class="form-control" type="text" name="nss" placeholder="Escribe tu nss" disabled value="<?php echo htmlspecialchars(Input::get('nss')); ?>"/>
                 <label class="control-label">Fijo</label>
                 <input class="form-control" type="text" name="fijo" placeholder="Escribe tu salario fijo" value="<?php echo htmlspecialchars(Input::get('fijo')); ?>"/>
                 <label class="control-label">Ventas</label>
@@ -71,6 +71,10 @@ if (isset($validador)) {  // ha habido envío //también if (isset($validador))
                 <input type="submit" name="editando" value="editando" />
                 <!--?php echo Input::get('nombre') ? pinta el dato si este se ha escrito-->
             </div>
+            
+            <input type="hidden" name="nss" value="<?php echo htmlspecialchars(Input::get('nss')); ?>" />
+            
+            
         </form>
     </fieldset>
 </article>

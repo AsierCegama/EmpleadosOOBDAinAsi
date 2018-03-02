@@ -6,11 +6,7 @@ include 'modelo/Empleado.php';
 include 'modelo/EmpleadoPorComision.php';
 include "helper/Utilidades.php";
 
-/**
- * Description of Controlador
- *
- * @author DWES
- */
+
 class Controlador {
 
     private $dao;
@@ -170,14 +166,6 @@ class Controlador {
         return $empleados;
     }
 
-    public function mostrarFormularioInsertar($validador = null) {
-        include "vistas/form_insertar.php";
-    }
-
-    public function mostrarFormularioEditar() {
-        include "vistas/form_editar.php";
-    }
-
     public function crearReglasDeValidacion() {
         $reglasValidacion = array(
             "apellido" => array("required" => true),
@@ -229,7 +217,7 @@ class Controlador {
 
         if ($this->dao->existeEmpleado($EmpleadoPorComision->getNss())) {
             $respuestaInserto = "El NSS ya pertenece a un/a usuari@.";
-            $this->mostrarFormularioInsertar();
+            include "vistas/form_insertar.php";            
             exit();
         } else {
             $respuestaInserto = $this->dao->insertar($EmpleadoPorComision);
