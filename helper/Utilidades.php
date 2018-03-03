@@ -1,9 +1,5 @@
 <?php
 
-/*
- * No lo utilizamos en el primer ejemplo de validación
- */
-
 class Utilidades
 {
 

@@ -13,17 +13,13 @@ class DaoEmpleado
         $this -> db -> conectar();
         $sql = "select * from empleados";
         $result = $this -> db -> ejecutarSql($sql);
-        //$empleados = $result->fetchAll();  --Karmele (para una sola fila devuelta ¿?)
+        //$empleados = $result->fetchAll();
         $this -> db -> desconectar();
         return $result;
     }
     
     public function editar($Empleado){
         $this->db->conectar();
-        
-        // UPDATE `empleados` SET `nombre`='Sancho',`apellido`='panza',`fijo`=100,`ventasbrutas`=100,`tarifacomision`=20,`localiza`=2 WHERE `nss` like 321654;
-        
-        $this -> db -> conectar();
         $sql = "UPDATE `empleados` SET `nombre`='".$Empleado->getNombre()."',`apellido`='".$Empleado->getApellido()."',`fijo`=".$Empleado->getFijo().",`ventasbrutas`=".$Empleado->getVentasbrutas().",`tarifacomision`=".$Empleado->getTarifacomision().",`localiza`=".$Empleado->getLocalizacion()." WHERE `nss` like '".$Empleado->getNss()."'";
         $result = $this -> db -> ejecutarSql($sql);
         $this -> db -> desconectar();

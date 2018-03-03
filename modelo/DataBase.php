@@ -48,9 +48,8 @@ class DataBase
         return $resultado;
         
     }
+    
     public function cantidadFilas($rst){
-        //$cuenta = $rst->rowCount();
-        //return $cuenta;
         return $rst->rowCount();
     }
 
