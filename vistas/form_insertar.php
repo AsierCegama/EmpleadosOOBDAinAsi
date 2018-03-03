@@ -80,17 +80,23 @@ if (isset($validador))  // ha habido envío //también if (isset($validador))
         <label class="form-label">Localiza</label>
         <br />
 
-        <label  class="checkbox-inline form-label"><input type="checkbox" name="localiza[]" value="nacional" >Nacional</label>
-        <label class="form-label checkbox-inline"><input type="checkbox" name="localiza[]" value="internacional" >Internacional</label>
-        <br />
+        <label  class="checkbox-inline form-label"><input type="checkbox" name="localiza[]" value="nacional" 
+            <?php if (isset($_POST["localiza"])){
+                Utilidades::verificarCheckbox($_POST["localiza"], "nacional");} ?>
+            >Nacional</label>
+        <label class="form-label checkbox-inline"><input type="checkbox" name="localiza[]" value="internacional" 
+            <?php if (isset($_POST["localiza"])){
+                Utilidades::verificarCheckbox($_POST["localiza"], "internacional");} ?>
+            >Internacional</label>
+        <br /><br />
         <input type='submit' class="btn btn-primary" name='enviarInserto' value='Enviar' >
 
     </div>
 </form>
 <?php
-if (isset($respuestaInserto)) {
-    echo $respuestaInserto;
-    $respuestaInserto = "";
-}
+//if (isset($respuestaInserto)) {
+//    echo $respuestaInserto;
+//    $respuestaInserto = "";
+//}
 include "pie.php";
 ?>

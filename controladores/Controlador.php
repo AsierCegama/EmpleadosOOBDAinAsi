@@ -26,6 +26,7 @@ class Controlador {
             }
             exit();
         }
+        
         //IMPLEMENTA EDITAR
         //Asier
         if (isset($_GET['opcion']) && $_GET['opcion'] == 'editar') {
@@ -53,11 +54,11 @@ class Controlador {
             //var_dump($emple);
         }
 
-
         //IMPLEMENTA INSERTAR
         //Asier
         if (isset($_GET['opcion']) && $_GET['opcion'] == 'insertar') {
-            $this->mostrarFormularioInsertar();
+            //$this->mostrarFormularioInsertar();
+            include "vistas/form_insertar.php";
             exit();
         }
 

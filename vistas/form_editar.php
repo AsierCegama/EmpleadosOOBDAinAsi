@@ -65,10 +65,16 @@ if (isset($validador)) {  // ha habido envío //también if (isset($validador))
                 <label class="control-label">Localizacion</label>
                 <br />
 
-                <label  class="checkbox-inline form-label"><input type="checkbox" name="localiza[]" value="nacional" >Nacional</label>
-                <label class="form-label checkbox-inline"><input type="checkbox" name="localiza[]" value="internacional" >Internacional</label>
-                <br />
-                <input type="submit" name="editando" value="editando" />
+                <label  class="checkbox-inline form-label"><input type="checkbox" name="localiza[]" value="nacional" 
+                    <?php if (Input::get('localiza') > 0){
+                        echo "checked='checked'";} ?>
+                    >Nacional</label>
+                <label class="form-label checkbox-inline"><input type="checkbox" name="localiza[]" value="internacional" 
+                    <?php if (Input::get('localiza') > 1){
+                        echo "checked='checked'";} ?>
+                    >Internacional</label>
+                <br /><br />
+                <input type="submit" name="editando" value="Editando" />
                 <!--?php echo Input::get('nombre') ? pinta el dato si este se ha escrito-->
             </div>
             

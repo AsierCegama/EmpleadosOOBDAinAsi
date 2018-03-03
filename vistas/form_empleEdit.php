@@ -8,7 +8,7 @@ if (empty($empleadosEditar)) {
 }
 
 
-echo "<h1>¿Qué empleado/a desea eliminar?</h1>";
+echo "<h1>¿Qué empleado/a desea editar?</h1>";
 
 if (isset($resultado)) {
     echo "<h3 class='text-success'>$resultado</h3>";
@@ -36,7 +36,8 @@ foreach ($empleadosEditar as $empleado) {
         <input type="hidden" name="nss" value="<?php echo htmlspecialchars($empleado['nss'])?>" /> 
         <input type="hidden" name="fijo" value="<?php echo htmlspecialchars($empleado['fijo'])?>" />
         <input type="hidden" name="tarifa" value="<?php echo htmlspecialchars($empleado['tarifacomision'])?>" />
-        <input type="hidden" name="ventas" value="<?php echo htmlspecialchars($empleado['ventasbrutas'])?>" /> 
+        <input type="hidden" name="ventas" value="<?php echo htmlspecialchars($empleado['ventasbrutas'])?>" />
+        <input type="hidden" name="localiza" value="<?php echo $empleado['localiza']?>" />
     </form>
     <?php
 }

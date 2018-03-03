@@ -23,7 +23,7 @@ foreach ($ingresosEmpleados1 as $empleado)
 {
     ?>
     <tr>
-        <td><?php echo htmlspecialchars($empleado['ingresos']) ?> </td>
+        <td><?php echo htmlspecialchars($empleado['ingresos'])." €" ?> </td>
         <td><?php echo htmlspecialchars($empleado['nombre']) ?></td>
         <td><?php echo htmlspecialchars($empleado['apellido']) ?> </td>
     </tr>
@@ -35,7 +35,7 @@ foreach ($ingresosEmpleados2 as $empleado)
 {
     ?>
     <tr>
-        <td><?php echo htmlspecialchars($empleado['ingresos']) ?> </td>
+        <td><?php echo htmlspecialchars($empleado['ingresos'])." €" ?> </td>
         <td><?php echo htmlspecialchars($empleado['nombre']) ?></td>
         <td><?php echo htmlspecialchars($empleado['apellido']) ?> </td>
     </tr>
